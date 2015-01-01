@@ -22,13 +22,13 @@ class User < ActiveRecord::Base
 
 
   # Returns the hash digest of the given string. (Class method)
-  def User.digest(string)
+  def self.digest(string)
     cost = ActiveModel::SecurePassword.min_cost ? BCrypt::Engine::MIN_COST : BCrypt::Engine.cost
     BCrypt::Password.create(string, cost: cost)
   end
 
   # Returns a random token. (Class method)
-  def User.new_token
+  def self.new_token
     SecureRandom.urlsafe_base64
   end
 
@@ -38,15 +38,16 @@ class User < ActiveRecord::Base
     update_attribute(:remember_digest, User.digest(remember_token))
   end
 
+  # Forgets a user.
+  def forget
+    update_attribute(:remember_digest, nil)
+  end
+  
   # Returns true if the given token matches the digest.
   def authenticated?(remember_token)
     return false if remember_digest.nil? # For multiple browers conflicts
     BCrypt::Password.new(remember_digest).is_password?(remember_token)
   end
 
-  # Forgets a user.
-  def forget
-    update_attribute(:remember_digest, nil)
-  end
 
 end
