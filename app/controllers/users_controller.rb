@@ -5,12 +5,14 @@ class UsersController < ApplicationController
 
   # Index
   def index
-    @users = User.all
+    # @users = User.all
+    @users = User.where(activated: true)
   end
 
   # Show
   def show
     @user = User.find(params[:id])
+    redirect_to root_url and return unless @user.activated?
     # debugger # byebug
   end
 

@@ -3,23 +3,30 @@ require 'test_helper'
 class UsersIndexTest < ActionDispatch::IntegrationTest
 
   def setup
-    @admin = users(:michael)
-    @non_admin = users(:archer)
+    @admin_user = users(:michael)
+    @non_admin_user = users(:archer)
+    @non_activated_user = users(:lana)
   end
 
   test "index as an admin including delete links" do
-    log_in_as(@admin)
+    log_in_as(@admin_user)
     get users_path
     assert_template 'users/index'
     assert_difference 'User.count', -1 do
-      delete user_path(@non_admin)
+      delete user_path(@non_admin_user)
     end
   end
 
   test "index as non-admin" do
-    log_in_as(@non_admin)
+    log_in_as(@non_admin_user)
     get users_path
     assert_select 'a', text: 'delete', count: 0
+  end
+
+  test "non-activated user hidden" do
+    log_in_as(@non_admin_user)
+    get users_path
+    assert_no_match @non_activated_user.name, response.body
   end
 
 end

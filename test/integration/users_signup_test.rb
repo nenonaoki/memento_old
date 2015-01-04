@@ -30,6 +30,9 @@ class UsersSignupTest < ActionDispatch::IntegrationTest
     user = assigns(:user)
     assert_not user.activated?
 
+    get user_path(user)
+    assert_redirected_to root_url
+
     # Try to log in before activation
     log_in_as(user)
     assert_not is_logged_in?
