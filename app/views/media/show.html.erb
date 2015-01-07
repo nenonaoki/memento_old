@@ -1,2 +1,8 @@
-<h1>Media#show</h1>
-<p>Find me in app/views/media/show.html.erb</p>
+<% provide(:title, @medium.title) %>
+
+<h1><%= @medium.title %></h1>
+<p><%= @medium.source %></p>
+<p><%= @medium.description %></p>
+<% if logged_in? && current_user.admin? %>
+    <p><%= link_to "Edit", edit_medium_path(@medium) %></p>
+<% end %>

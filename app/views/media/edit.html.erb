@@ -1,2 +1,8 @@
-<h1>Media#edit</h1>
-<p>Find me in app/views/media/edit.html.erb</p>
+<% provide(:title, 'Edit medium') %>
+
+<h1>Edit medium</h1>
+
+<%= form_for(@medium) do |f| %>
+  <%= render 'fields', f: f %>
+  <%= f.submit "Save changes", class: "btn btn-primary" %>
+<% end %>

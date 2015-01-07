@@ -1,8 +1,12 @@
 require 'test_helper'
 
 class MediaControllerTest < ActionController::TestCase
+  def setup
+    @medium = media(:one)
+  end
+
   test "should get show" do
-    get :show
+    get :show, id: @medium
     assert_response :success
   end
 
@@ -12,7 +16,7 @@ class MediaControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit
+    get :edit, id: @medium
     assert_response :success
   end
 
