@@ -1,9 +1,9 @@
 require 'test_helper'
 
-class MediaControllerTest < ActionController::TestCase
-  # TODO: Need Unit Test for Medium controller
+class TagsControllerTest < ActionController::TestCase
+  # TODO: Need Unit Test for Tag controller
   def setup
-    @medium = media(:one)
+    @tag = tags(:one)
   end
 
   test "should get index" do
@@ -12,7 +12,7 @@ class MediaControllerTest < ActionController::TestCase
   end
 
   test "should get show" do
-    get :show, id: @medium
+    get :show, id: @tag
     assert_response :success
   end
 
@@ -22,7 +22,7 @@ class MediaControllerTest < ActionController::TestCase
   end
 
   test "should get edit" do
-    get :edit, id: @medium
+    get :edit, id: @tag
     assert_response :success
   end
 

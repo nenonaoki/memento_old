@@ -1,7 +1,7 @@
 require 'test_helper'
 
 class MediumTest < ActiveSupport::TestCase
-
+  # TODO: Need Unit Test for Medium model
   def setup
     @medium = Medium.new(title: "Example Video",
                          source: "http://example.com/path/to/medium.file",

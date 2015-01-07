@@ -1,0 +1,11 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  id: fujirock
+  label: Fujirock
+  description: MyText
+
+two:
+  id: summersonic
+  label: SummerSonic
+  description: MyText

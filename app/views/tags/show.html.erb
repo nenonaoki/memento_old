@@ -1,0 +1,7 @@
+<% provide(:title, @tag.label) %>
+
+<h1><%= @tag.label %></h1>
+<p><%= @tag.description %></p>
+<% if logged_in? && current_user.admin? %>
+    <p><%= link_to "Edit", edit_tag_path(@tag) %></p>
+<% end %>

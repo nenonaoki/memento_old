@@ -1,0 +1,8 @@
+<% provide(:title, 'New tag') %>
+
+<h1>New tag</h1>
+
+<%= form_for(@tag) do |f| %>
+  <%= render 'fields', f: f %>
+  <%= f.submit "Add this tag", class: "btn btn-primary" %>
+<% end %>

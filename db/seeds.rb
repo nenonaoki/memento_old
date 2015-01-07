@@ -25,3 +25,7 @@ User.create!(name:  "Example User",
                activated: true,
                activated_at: Time.zone.now)
 end
+
+
+# TODO: Add seed for media
+# TODO: Add seed for tags
