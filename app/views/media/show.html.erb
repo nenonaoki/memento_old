@@ -1,8 +1,13 @@
 <% provide(:title, @medium.title) %>
 
 <h1><%= @medium.title %></h1>
-<p><%= @medium.source %></p>
-<p><%= @medium.description %></p>
 <% if logged_in? && current_user.admin? %>
     <p><%= link_to "Edit", edit_medium_path(@medium) %></p>
 <% end %>
+
+<div id="wistia_<%= @medium.source %>" class="wistia_embed" style="width:640px;height:360px;">&nbsp;</div>
+<script>
+wistiaEmbed = Wistia.embed("<%= @medium.source %>");
+</script>
+
+<p><%= @medium.description %></p>

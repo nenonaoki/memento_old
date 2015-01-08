@@ -1,7 +1,7 @@
 <li>
   <%= link_to medium.title, medium %><br>
-  <%= medium.source %>
-  <% if current_user.admin? %>
+  <%= medium.description %>
+  <% if current_user && current_user.admin? %>
     <%= link_to "delete", medium, method: :delete, data: { confirm: "You sure?" } %>
   <% end %>
 </li>

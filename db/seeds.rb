@@ -6,6 +6,7 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Seed for users
 User.create!(name:  "Example User",
              email: "example@railstutorial.org",
              password:              "foobar",
@@ -27,5 +28,17 @@ User.create!(name:  "Example User",
 end
 
 
-# TODO: Add seed for media
+# Seed for media
+Medium.create!(title:  "Peguin Cafe",
+               source: "d46lnimzyt",
+               description: "text text text text text text")
+
+Medium.create!(title:  "Henning Schmiedt",
+               source: "oekwduqbgq",
+               description: "text text text text text text")
+
+Medium.create!(title:  "Lenny Delivers Video",
+               source: "ijujquyu9f",
+               description: "text text text text text text")
+
 # TODO: Add seed for tags
