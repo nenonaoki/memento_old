@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  # Association
+  has_many :comments, dependent: :destroy
+  has_many :media, through: :comments
 
   has_secure_password # require "password_digest" column in database table
   attr_accessor :remember_token, :activation_token, :reset_token

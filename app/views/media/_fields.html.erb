@@ -8,3 +8,7 @@
 
 <%= f.label :description %>
 <%= f.text_area :description %>
+
+<%= f.label :tags %>
+<%#= f.collection_select :tags, Tag.all, :id, :label, {}, multiple: true %>
+<%= f.select :tags, Tag.all.map{ |tag| [tag.label, tag.id] }, {},  multiple: true %>

@@ -47,7 +47,7 @@ class TagsController < ApplicationController
   private
     # Strong parameters that prevent mass assignment
     def tag_params
-      params.require(:tag).permit(:id, :label, :description)
+      params.require(:tag).permit(:slug, :label, :description)
     end
 
     # Confirm an admin user.

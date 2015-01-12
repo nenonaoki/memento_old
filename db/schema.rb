@@ -11,13 +11,25 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150107105004) do
+ActiveRecord::Schema.define(version: 20150112034216) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
 
-  create_table "media", id: false, force: :cascade do |t|
-    t.string   "id",          null: false
+  create_table "comments", force: :cascade do |t|
+    t.string   "body"
+    t.integer  "user_id"
+    t.integer  "medium_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "comments", ["created_at"], name: "index_comments_on_created_at", using: :btree
+  add_index "comments", ["medium_id"], name: "index_comments_on_medium_id", using: :btree
+  add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
+
+  create_table "media", force: :cascade do |t|
+    t.string   "code",        null: false
     t.string   "title"
     t.string   "source"
     t.text     "description"
@@ -25,17 +37,25 @@ ActiveRecord::Schema.define(version: 20150107105004) do
     t.datetime "updated_at",  null: false
   end
 
-  add_index "media", ["id"], name: "index_media_on_id", unique: true, using: :btree
+  add_index "media", ["code"], name: "index_media_on_code", unique: true, using: :btree
 
-  create_table "tags", id: false, force: :cascade do |t|
-    t.string   "id",          null: false
+  create_table "media_tags", force: :cascade do |t|
+    t.integer "medium_id"
+    t.integer "tag_id"
+  end
+
+  add_index "media_tags", ["medium_id"], name: "index_media_tags_on_medium_id", using: :btree
+  add_index "media_tags", ["tag_id"], name: "index_media_tags_on_tag_id", using: :btree
+
+  create_table "tags", force: :cascade do |t|
+    t.string   "slug",        null: false
     t.string   "label"
     t.text     "description"
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
 
-  add_index "tags", ["id"], name: "index_tags_on_id", unique: true, using: :btree
+  add_index "tags", ["slug"], name: "index_tags_on_slug", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "name"
@@ -54,4 +74,8 @@ ActiveRecord::Schema.define(version: 20150107105004) do
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
 
+  add_foreign_key "comments", "media"
+  add_foreign_key "comments", "users"
+  add_foreign_key "media_tags", "media"
+  add_foreign_key "media_tags", "tags"
 end

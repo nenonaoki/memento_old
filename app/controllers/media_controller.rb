@@ -7,6 +7,8 @@ class MediaController < ApplicationController
 
   def show
     @medium = Medium.find(params[:id])
+    @comments = @medium.comments.all
+    @comment = current_user.comments.build if logged_in?
   end
 
   def new

@@ -7,6 +7,7 @@ class UserTest < ActiveSupport::TestCase
                      email: "user@example.com",
                      password: "foobar",
                      password_confirmation: "foobar")
+    @medium = media(:one)
   end
 
   test "should be valid" do
@@ -70,6 +71,15 @@ class UserTest < ActiveSupport::TestCase
 
   test "authenticated? should return false for a user with nil digest" do
     assert_not @user.authenticated?(:remember, '')
+  end
+
+  test "associated comments should be destroyed" do
+    @user.save()
+    @user.comments.create!(body: "Lorem ipsum", medium_id: @medium.id)
+    assert_difference "Comment.count", -1 do
+      @user.destroy
+    end
+
   end
 
 end

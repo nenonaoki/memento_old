@@ -15,7 +15,7 @@ User.create!(name:  "Example User",
              activated_at: Time.zone.now,
              admin: true)
 
-99.times do |n|
+100.times do |n|
   name  = Faker::Name.name
   email = "example-#{n+1}@railstutorial.org"
   password = "password"
@@ -41,4 +41,37 @@ Medium.create!(title:  "Lenny Delivers Video",
                source: "ijujquyu9f",
                description: "text text text text text text")
 
-# TODO: Add seed for tags
+20.times do |n|
+  name  = Faker::Name.name
+  email = "example-#{n+1}@railstutorial.org"
+  password = "password"
+  Medium.create!(title: Faker::Name.title,
+                 source: "oekwduqbgq",
+                 description: Faker::Lorem.sentence(10))
+end
+
+
+# TODO: Add slugify helper
+# Seed for tags
+Medium.all.each do |medium|
+  rand(1..3).times do
+    label = Faker::Lorem.sentence(1)
+    slug = Faker::Internet.slug
+    unless Tag.exists?(slug: slug)
+      medium.tags.create!(slug: slug,
+                          label: label,
+                          description: Faker::Lorem.sentence(10))
+    end
+  end
+end
+
+
+# Seed for comments
+media = Medium.order(:created_at).take(6)
+users = User.all.take(10)
+users.each do |user|
+  media.each { |medium|
+    medium.comments.create!(body: Faker::Lorem.sentence(4),
+                            user: user)
+  }
+end

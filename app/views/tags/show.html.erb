@@ -5,3 +5,9 @@
 <% if logged_in? && current_user.admin? %>
     <p><%= link_to "Edit", edit_tag_path(@tag) %></p>
 <% end %>
+
+<ul>
+<% @tag.media.each do |medium| %>
+  <li><%= link_to medium.title, medium %></li>  
+<% end %>
+</ul>
