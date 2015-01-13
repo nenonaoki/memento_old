@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150112034216) do
+ActiveRecord::Schema.define(version: 20150113053135) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -57,6 +57,21 @@ ActiveRecord::Schema.define(version: 20150112034216) do
 
   add_index "tags", ["slug"], name: "index_tags_on_slug", unique: true, using: :btree
 
+  create_table "tickets", force: :cascade do |t|
+    t.string   "serial_code",                   null: false
+    t.integer  "user_id"
+    t.integer  "medium_id"
+    t.boolean  "checked_in",    default: false
+    t.datetime "checked_in_at"
+    t.boolean  "activated",     default: false
+    t.datetime "activated_at"
+    t.datetime "created_at",                    null: false
+    t.datetime "updated_at",                    null: false
+  end
+
+  add_index "tickets", ["medium_id"], name: "index_tickets_on_medium_id", using: :btree
+  add_index "tickets", ["user_id"], name: "index_tickets_on_user_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -78,4 +93,6 @@ ActiveRecord::Schema.define(version: 20150112034216) do
   add_foreign_key "comments", "users"
   add_foreign_key "media_tags", "media"
   add_foreign_key "media_tags", "tags"
+  add_foreign_key "tickets", "media"
+  add_foreign_key "tickets", "users"
 end

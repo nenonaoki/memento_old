@@ -15,12 +15,10 @@ User.create!(name:  "Example User",
              activated_at: Time.zone.now,
              admin: true)
 
-100.times do |n|
-  name  = Faker::Name.name
-  email = "example-#{n+1}@railstutorial.org"
+20.times do |n|
   password = "password"
-  User.create!(name:  name,
-               email: email,
+  User.create!(name:  Faker::Name.name,
+               email: "example-#{n+1}@railstutorial.org",
                password:              password,
                password_confirmation: password,
                activated: true,
@@ -33,21 +31,32 @@ Medium.create!(title:  "Peguin Cafe",
                source: "d46lnimzyt",
                description: "text text text text text text")
 
-Medium.create!(title:  "Henning Schmiedt",
-               source: "oekwduqbgq",
-               description: "text text text text text text")
-
-Medium.create!(title:  "Lenny Delivers Video",
-               source: "ijujquyu9f",
-               description: "text text text text text text")
-
 20.times do |n|
-  name  = Faker::Name.name
-  email = "example-#{n+1}@railstutorial.org"
-  password = "password"
   Medium.create!(title: Faker::Name.title,
                  source: "oekwduqbgq",
                  description: Faker::Lorem.sentence(10))
+end
+
+
+# Seed for tickets
+Medium.all.each do |medium|
+  user = User.first
+
+  3.times do
+    medium.tickets.create!
+  end
+  3.times do
+    medium.tickets.create!(user: user,
+                           checked_in: true,
+                           checked_in_at: 1.hours.ago)
+  end
+  3.times do
+    medium.tickets.create!(user: user,
+                           checked_in: true,
+                           checked_in_at: 1.hours.ago,
+                           activated: true,
+                           activated_at: Time.zone.now)
+  end
 end
 
 

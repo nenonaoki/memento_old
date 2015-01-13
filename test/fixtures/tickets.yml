@@ -1,0 +1,17 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+# one:
+#   user_id: 
+#   medium_id: 
+#   checked_in: false
+#   checked_in_at: 2015-01-13 14:31:35
+#   activated: false
+#   activated_at: 2015-01-13 14:31:35
+
+# two:
+#   user_id: 
+#   medium_id: 
+#   checked_in: false
+#   checked_in_at: 2015-01-13 14:31:35
+#   activated: false
+#   activated_at: 2015-01-13 14:31:35

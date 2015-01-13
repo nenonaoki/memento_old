@@ -1,7 +1,8 @@
 class Medium < ActiveRecord::Base
   # Association
   has_many :comments, dependent: :destroy
-  has_many :users, through: :comments
+  has_many :tickets, dependent: :destroy
+  has_many :users, through: :tickets
   has_and_belongs_to_many :tags
 
   # self.primary_key = :id
