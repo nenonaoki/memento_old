@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150113053135) do
+ActiveRecord::Schema.define(version: 20150113133107) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -26,6 +26,7 @@ ActiveRecord::Schema.define(version: 20150113053135) do
 
   add_index "comments", ["created_at"], name: "index_comments_on_created_at", using: :btree
   add_index "comments", ["medium_id"], name: "index_comments_on_medium_id", using: :btree
+  add_index "comments", ["user_id", "medium_id", "created_at"], name: "index_comments_on_user_id_and_medium_id_and_created_at", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
   create_table "media", force: :cascade do |t|
@@ -39,13 +40,16 @@ ActiveRecord::Schema.define(version: 20150113053135) do
 
   add_index "media", ["code"], name: "index_media_on_code", unique: true, using: :btree
 
-  create_table "media_tags", force: :cascade do |t|
-    t.integer "medium_id"
-    t.integer "tag_id"
+  create_table "taggings", force: :cascade do |t|
+    t.integer  "medium_id"
+    t.integer  "tag_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
   end
 
-  add_index "media_tags", ["medium_id"], name: "index_media_tags_on_medium_id", using: :btree
-  add_index "media_tags", ["tag_id"], name: "index_media_tags_on_tag_id", using: :btree
+  add_index "taggings", ["medium_id", "tag_id"], name: "index_taggings_on_medium_id_and_tag_id", unique: true, using: :btree
+  add_index "taggings", ["medium_id"], name: "index_taggings_on_medium_id", using: :btree
+  add_index "taggings", ["tag_id"], name: "index_taggings_on_tag_id", using: :btree
 
   create_table "tags", force: :cascade do |t|
     t.string   "slug",        null: false
@@ -91,8 +95,8 @@ ActiveRecord::Schema.define(version: 20150113053135) do
 
   add_foreign_key "comments", "media"
   add_foreign_key "comments", "users"
-  add_foreign_key "media_tags", "media"
-  add_foreign_key "media_tags", "tags"
+  add_foreign_key "taggings", "media"
+  add_foreign_key "taggings", "tags"
   add_foreign_key "tickets", "media"
   add_foreign_key "tickets", "users"
 end

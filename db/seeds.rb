@@ -38,6 +38,25 @@ Medium.create!(title:  "Peguin Cafe",
 end
 
 
+# TODO: Add slugify helper
+# Seed for tags
+Tag.create!(slug: "fujirock",
+            label: "Fujirock",
+            description: Faker::Lorem.sentence(10))
+
+20.times do |n|
+  Tag.create!(slug: Faker::Internet.slug,
+              label: Faker::Name.title,
+              description: Faker::Lorem.sentence(10))  
+end
+
+
+# Seed for tagging
+Medium.all.each do |medium|
+  medium.tag(Tag.offset(rand(Tag.count)).take)
+end
+
+
 # Seed for tickets
 Medium.all.each do |medium|
   user = User.first
@@ -56,21 +75,6 @@ Medium.all.each do |medium|
                            checked_in_at: 1.hours.ago,
                            activated: true,
                            activated_at: Time.zone.now)
-  end
-end
-
-
-# TODO: Add slugify helper
-# Seed for tags
-Medium.all.each do |medium|
-  rand(1..3).times do
-    label = Faker::Lorem.sentence(1)
-    slug = Faker::Internet.slug
-    unless Tag.exists?(slug: slug)
-      medium.tags.create!(slug: slug,
-                          label: label,
-                          description: Faker::Lorem.sentence(10))
-    end
   end
 end
 
