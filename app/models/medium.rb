@@ -25,9 +25,23 @@ class Medium < ActiveRecord::Base
     taggings.find_by(tag_id: tag_instance.id).destroy
   end
 
-  # Returns true if the current medium has a given tag.
+  # Return true if the current medium has a given tag.
   def tag?(tag_instance)
     tags.include?(tag_instance)
+  end
+
+  # Update taggings based on tag ids in a list.
+  def update_tags(tag_ids)
+    tags.each do |tag_instance|
+      untag(tag_instance)
+    end
+
+    tags.reload
+
+    tag_ids.each do |tag_id|
+      tag_instance = Tag.find(tag_id)
+      tag(tag_instance) unless tag?(tag_instance)
+    end
   end
 
   # Returns a random code. (Class method)

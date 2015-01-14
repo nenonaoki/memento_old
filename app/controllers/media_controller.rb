@@ -18,6 +18,7 @@ class MediaController < ApplicationController
   def create
     @medium = Medium.new(medium_params)
     if @medium.save
+      @medium.update_tags(tag_params)
       flash[:info] = "New medium created"
       redirect_to @medium
     else
@@ -32,6 +33,7 @@ class MediaController < ApplicationController
   def update
     @medium = Medium.find(params[:id])
     if @medium.update_attributes(medium_params)
+      @medium.update_tags(tag_params)
       flash[:success] = "Medium updated"
       redirect_to @medium
     else
@@ -50,6 +52,10 @@ class MediaController < ApplicationController
     # Strong parameters that prevent mass assignment
     def medium_params
       params.require(:medium).permit(:title, :source, :description)
+    end
+
+    def tag_params
+      params[:tags].nil? ? [] : params.require(:tags)
     end
 
     # Confirm an admin user.
