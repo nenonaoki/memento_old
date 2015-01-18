@@ -13,3 +13,7 @@
 <%#= f.collection_select :tags, Tag.all, :id, :label, {}, multiple: true %>
 <%#= f.select :tags, Tag.all.map{ |tag| [tag.label, tag.id] }, {},  multiple: true %>
 <%= select_tag :tags, options_for_select(Tag.all.map{ |tag| [tag.label, tag.id] }),  multiple: true %>
+
+<%#= f.fields_for :tags do |tag_f| %>
+  <%#= tag_f.label :label %>
+<%# end %>

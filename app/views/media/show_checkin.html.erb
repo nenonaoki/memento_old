@@ -1,0 +1,50 @@
+<% provide(:title, @medium.title) %>
+
+<%= form_tag({ controller: :tickets, action: :checkin }, method: "post") do %>
+  <%= hidden_field_tag 'ticket[medium_id]', @medium.id %>
+  <%= hidden_field_tag 'ticket[user_id]', current_user.id %>
+  <%= text_field_tag 'ticket[serial_code]' %>
+  <%= submit_tag "Post", class: "btn btn-primary" %>
+<% end %>
+
+<h1>Check in <%= @medium.title %></h1>
+<h2><%= pluralize(@medium.tags.count, "tag") %></h2>
+<ul>
+  <% @medium.tags.each do |tag| %>
+    <li><%= link_to tag.label, tag %></li>
+  <% end %>
+</ul>
+<% if logged_in? && current_user.admin? %>
+    <p><%= link_to "Edit", edit_medium_path(@medium) %></p>
+<% end %>
+
+<p><%= @medium.description %></p>
+
+
+<% if @comments.any? %>
+  <h2><%= pluralize(@comments.count, "comment") %></h2>
+  <ul>
+  <% @comments.each do |comment| %>
+    <li>
+      <%= comment.body %> by <%= comment.user.name %>
+      <% if current_user?(comment.user) %>
+        <%= link_to "delete", comment, method: :delete, data: { confirm: "You sure?" } %>
+      <% end %>
+    </li>
+  <% end %>
+  </ul>
+<% end %>
+
+
+<% if logged_in? %>
+  <%= form_for(@comment) do |f| %>
+    <%= render "shared/error_messages", m: @comment %>
+
+    <%= f.hidden_field :medium_id, value: @medium.id %>
+
+    <%= f.label :body %>
+    <%= f.text_area :body %>
+
+    <%= f.submit "Post", class: "btn btn-primary" %>
+  <% end %>
+<% end %>

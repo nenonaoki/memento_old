@@ -4,7 +4,9 @@ class Medium < ActiveRecord::Base
   has_many :tickets, dependent: :destroy
   has_many :comments, dependent: :destroy
   has_many :tags, through: :taggings
-  has_many :taggings
+  has_many :taggings, dependent: :destroy
+
+  accepts_nested_attributes_for :tickets, :taggings
 
   # self.primary_key = :id
 

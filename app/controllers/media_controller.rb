@@ -8,7 +8,22 @@ class MediaController < ApplicationController
   def show
     @medium = Medium.find(params[:id])
     @comments = @medium.comments.all
-    @comment = current_user.comments.build if logged_in?
+
+    if logged_in?
+      @user = current_user 
+      @comment = @user.comments.build
+      @ticket = @medium.tickets.find_by(user_id: @user.id)
+    
+      if @ticket && @ticket.activated?
+        render 'show' # Video playable
+      elsif @ticket && @ticket.checked_in?
+        render 'show_activate'
+      else
+        render 'show_checkin' # Video playable
+      end
+    else
+      render 'show_signup'
+    end
   end
 
   def new

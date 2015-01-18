@@ -7,6 +7,11 @@ Rails.application.routes.draw do
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
+
+  # Ticket operation
+  post 'checkin' => 'tickets#checkin'
+  post 'activate' => 'tickets#activate'
+
   # get 'users/new'
   resources :users
   resources :account_activations, only: [:edit]

@@ -58,23 +58,22 @@ end
 
 
 # Seed for tickets
-Medium.all.each do |medium|
+Medium.all.each_with_index do |medium, index|
   user = User.first
 
-  3.times do
+  case index % 3
+  when 0
     medium.tickets.create!
-  end
-  3.times do
+  when 1
     medium.tickets.create!(user: user,
-                           checked_in: true,
-                           checked_in_at: 1.hours.ago)
-  end
-  3.times do
+                         checked_in: true,
+                         checked_in_at: 1.hours.ago)
+  when 2
     medium.tickets.create!(user: user,
-                           checked_in: true,
-                           checked_in_at: 1.hours.ago,
-                           activated: true,
-                           activated_at: Time.zone.now)
+                         checked_in: true,
+                         checked_in_at: 1.hours.ago,
+                         activated: true,
+                         activated_at: Time.zone.now)
   end
 end
 
