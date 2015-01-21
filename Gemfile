@@ -42,7 +42,11 @@ group :development, :test do
   # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
   gem 'spring'
 
-  # 
+  # Dummy db records
   gem 'faker', '1.4.3'
 end
 
+# ActiveAdmin (https://github.com/activeadmin/activeadmin)
+gem 'devise'
+gem 'activeadmin', github: 'activeadmin'
+gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'

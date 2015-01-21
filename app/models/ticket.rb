@@ -20,21 +20,11 @@ class Ticket < ActiveRecord::Base
                    checked_in_at: Time.zone.now)
   end
 
-  # Returns if thie ticket is checked in
-  # def checked_in?
-  #   self.checked_in?
-  # end
-
   # Activate a ticket.
   def activate
     update_columns(activated: true,
                    activated_at: Time.zone.now)
   end
-
-  # Returns if thie ticket is activated
-  # def activated?
-  #   self.activated?
-  # end
 
   private
     def create_serial_code
