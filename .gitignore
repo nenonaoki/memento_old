@@ -4,6 +4,9 @@
 # or operating system, you probably want to add a global ignore instead:
 #   git config --global core.excludesfile '~/.gitignore_global'
 
+# Ignore editor configuration file.
+/.project
+
 # Ignore bundler config.
 /.bundle
 
@@ -12,5 +15,5 @@
 !/log/.keep
 /tmp
 
-# Ignore editor configuration file
-.project
+# Ignoe coverage output.
+/coverage

@@ -46,6 +46,10 @@ group :development, :test do
   gem 'faker', '1.4.3'
 end
 
+
+gem 'simplecov', require: false, group: :test
+
+
 # ActiveAdmin (https://github.com/activeadmin/activeadmin)
 gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
