@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150121011918) do
+ActiveRecord::Schema.define(version: 20150122034646) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -62,6 +62,12 @@ ActiveRecord::Schema.define(version: 20150121011918) do
   add_index "comments", ["user_id", "medium_id", "created_at"], name: "index_comments_on_user_id_and_medium_id_and_created_at", using: :btree
   add_index "comments", ["user_id"], name: "index_comments_on_user_id", using: :btree
 
+  create_table "groups", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "media", force: :cascade do |t|
     t.string   "code",        null: false
     t.string   "title"
@@ -72,6 +78,18 @@ ActiveRecord::Schema.define(version: 20150121011918) do
   end
 
   add_index "media", ["code"], name: "index_media_on_code", unique: true, using: :btree
+
+  create_table "roles", force: :cascade do |t|
+    t.integer  "user_id"
+    t.integer  "group_id"
+    t.integer  "title_id"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "roles", ["group_id"], name: "index_roles_on_group_id", using: :btree
+  add_index "roles", ["title_id"], name: "index_roles_on_title_id", using: :btree
+  add_index "roles", ["user_id"], name: "index_roles_on_user_id", using: :btree
 
   create_table "taggings", force: :cascade do |t|
     t.integer  "medium_id"
@@ -109,6 +127,12 @@ ActiveRecord::Schema.define(version: 20150121011918) do
   add_index "tickets", ["medium_id"], name: "index_tickets_on_medium_id", using: :btree
   add_index "tickets", ["user_id"], name: "index_tickets_on_user_id", using: :btree
 
+  create_table "titles", force: :cascade do |t|
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
   create_table "users", force: :cascade do |t|
     t.string   "name"
     t.string   "email"
@@ -128,6 +152,9 @@ ActiveRecord::Schema.define(version: 20150121011918) do
 
   add_foreign_key "comments", "media"
   add_foreign_key "comments", "users"
+  add_foreign_key "roles", "groups"
+  add_foreign_key "roles", "titles"
+  add_foreign_key "roles", "users"
   add_foreign_key "taggings", "media"
   add_foreign_key "taggings", "tags"
   add_foreign_key "tickets", "media"
