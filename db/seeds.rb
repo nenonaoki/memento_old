@@ -6,14 +6,27 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Seed for titles
+title_manager = Title.create!(name: "manager")
+title_editor = Title.create!(name: "editor")
+title_reader = Title.create!(name: "reader")
+
+
+# Seed for groups
+group_admin = Group.create!(name: "admin")
+
+
 # Seed for users
-User.create!(name:  "Example User",
+user_admin = User.create!(name:  "Admin User",
              email: "example@railstutorial.org",
              password:              "foobar",
              password_confirmation: "foobar",
              activated: true,
              activated_at: Time.zone.now,
              admin: true)
+
+user_admin.roles.create!(group_id: group_admin.id,
+                         title_id: title_manager.id)
 
 20.times do |n|
   password = "password"

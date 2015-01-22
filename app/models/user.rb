@@ -1,5 +1,8 @@
 class User < ActiveRecord::Base
   # Association
+  has_many :groups, through: :roles
+  has_many :titles, through: :roles
+  has_many :roles, dependent: :destroy
   has_many :media, through: :tickets
   has_many :tickets, dependent: :destroy
   has_many :comments, dependent: :destroy
