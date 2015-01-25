@@ -6,11 +6,15 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
+# Seed for currencies
+Currency.create!(iso_code: "jpy")
+Currency.create!(iso_code: "usd")
+Currency.create!(iso_code: "eur")
+
 # Seed for titles
 title_manager = Title.create!(name: "manager")
 title_editor = Title.create!(name: "editor")
 title_reader = Title.create!(name: "reader")
-
 
 # Seed for groups
 group_admin = Group.create!(name: "admin")

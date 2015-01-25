@@ -1,0 +1,16 @@
+<%= render "shared/error_messages", m: @creditcard %>
+
+<%= f.label :name %>
+<%= f.text_field :name %>
+
+<%= f.label :number %>
+<%= f.text_field :number %>
+
+<%= f.label :exp_month %>
+<%= f.select :exp_month, (1..12).map { |num| num.to_s.rjust(2, '0') } %>
+
+<%= f.label :exp_year %>
+<%= f.select :exp_year, Time.zone.now.year..(Time.zone.now + 20.years).year %>
+
+<%= f.label :cvc %>
+<%= f.text_field :cvc %>

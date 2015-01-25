@@ -1,5 +1,6 @@
 class Medium < ActiveRecord::Base
   # Association
+  has_one :currency
   has_many :users, through: :tickets
   has_many :tickets, dependent: :destroy
   has_many :comments, dependent: :destroy

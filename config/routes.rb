@@ -5,13 +5,28 @@ Rails.application.routes.draw do
   
   root 'users#new'
 
-  # get 'sessions/new'
+  # Login / Logout routing
   get 'signup' => 'users#new'
   get 'login' => 'sessions#new'
   post 'login' => 'sessions#create'
   delete 'logout' => 'sessions#destroy'
 
-  # Ticket operation
+  # Cart routing
+  get 'cart' => 'carts#new'
+  resource :cart, only: [:create] do
+    member do
+      post :confirm
+      get  :complete
+    end
+  end
+
+  # scope :cart do
+
+  #   post 'confirm' => 'carts#confirm'
+  #   post 'complete' => 'carts#complete'
+  # end
+
+  # Ticket routing
   post 'checkin' => 'tickets#checkin'
   post 'activate' => 'tickets#activate'
 

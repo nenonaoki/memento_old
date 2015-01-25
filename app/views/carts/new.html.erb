@@ -1,0 +1,8 @@
+<% provide(:title, 'お支払い') %>
+
+<h1>お支払い</h1>
+
+<%= form_for @creditcard, url: confirm_cart_path do |f| %>
+  <%= render 'fields', f: f %>
+  <%= f.submit "注文内容を確認", class: "btn btn-primary" %>
+<% end %>

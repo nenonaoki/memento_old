@@ -46,11 +46,16 @@ group :development, :test do
   gem 'faker', '1.4.3'
 end
 
+# Config values
+gem 'rails_config'
 
+# Coverage
 gem 'simplecov', require: false, group: :test
-
 
 # ActiveAdmin (https://github.com/activeadmin/activeadmin)
 gem 'devise'
 gem 'activeadmin', github: 'activeadmin'
 gem 'inherited_resources', github: 'josevalim/inherited_resources', branch: 'rails-4-2'
+
+# Payment
+gem 'webpay', '~>3.2'

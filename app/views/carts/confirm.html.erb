@@ -1,0 +1,30 @@
+<% provide(:title, 'お支払い確認') %>
+
+<h1>お支払い</h1>
+
+<%= form_for @creditcard, url: cart_path do |f| %>
+
+  <%= f.label :name %>
+  <%= f.hidden_field :name %>
+  <%= @creditcard.name %>
+
+  <%= f.label :number %>
+  <%= f.hidden_field :number %>
+  <%= @creditcard.number %>
+
+  <%= f.label :exp_month %>
+  <%= f.hidden_field :exp_month %>
+  <%= @creditcard.exp_month %>
+
+  <%= f.label :exp_year %>
+  <%= f.hidden_field :exp_year %>
+  <%= @creditcard.exp_year %>
+
+  <%= f.label :cvc %>
+  <%= f.hidden_field :cvc %>
+  <%= @creditcard.cvc %>
+
+  <%= link_to 'Back', :back %>
+  <%= f.submit "注文を確定", class: "btn btn-primary" %>
+<% end %>
+

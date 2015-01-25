@@ -13,6 +13,8 @@ class CreateMedia < ActiveRecord::Migration
       t.string :title
       t.string :source
       t.text :description
+      t.integer :price
+      t.references :currency
 
       t.timestamps null: false
     end
