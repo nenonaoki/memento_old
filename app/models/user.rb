@@ -1,4 +1,7 @@
 class User < ActiveRecord::Base
+  
+  mount_uploader :avatar, AvatarUploader
+
   # Association
   has_many :groups, through: :roles
   has_many :titles, through: :roles

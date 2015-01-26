@@ -46,6 +46,10 @@ group :development, :test do
   gem 'faker', '1.4.3'
 end
 
+# Image uploader
+gem 'carrierwave'
+gem "mini_magick"
+
 # Config values
 gem 'rails_config'
 
