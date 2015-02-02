@@ -1,12 +1,21 @@
 <% provide(:title, @user.name) %>
 
-<h1>Show @User</h1>
+<h1>My page</h1>
+
+<dl>
+  <dt>Name</dt>
+  <dd><%= @user.name %></dd>
+</dl>
+<dl>
+  <dt>Email</dt>
+  <dd><%= @user.email %></dd>
+</dl>
+
 <%#= gravatar_for @user, size: 50 %> <%# From users_helper %>
-<% if @user.avatar? %>
-  <%#= image_tag @user.image.thumb.url %>
-  <%= image_tag @user.avatar.url %>
-<% else %>
-  <%= image_tag 'noimage.gif' %>
-<% end %>
-<%= @user.name %>
-<%= @user.email %>
+
+<dl>
+  <dt>Avatar</dt>
+  <dd>
+    <%= image_tag @user.avatar.url, width: 150, height: 150 %>
+  </dd>
+</dl>

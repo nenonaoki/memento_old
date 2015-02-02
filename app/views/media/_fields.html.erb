@@ -1,19 +1,24 @@
 <%= render "shared/error_messages", m: @medium %>
 
-<%= f.label :title %>
-<%= f.text_field :title %>
-
-<%= f.label :source %>
-<%= f.text_field :source %>
-
-<%= f.label :description %>
-<%= f.text_area :description %>
-
-<%= label_tag :tags %>
+<dl>
+  <dt><%= f.label :title %></dt>
+  <dd><%= f.text_field :title %></dd>
+</dl>
+<dl>
+  <dt><%= f.label :source %></dt>
+  <dd><%= f.text_field :source %></dd>
+</dl>
+<dl>
+  <dt><%= f.label :description %></dt>
+  <dd><%= f.text_area :description %></dd>
+</dl>
+<dl>
+  <dt><%= label_tag :tags %></dt>
+  <dd>
 <%#= f.collection_select :tags, Tag.all, :id, :label, {}, multiple: true %>
 <%#= f.select :tags, Tag.all.map{ |tag| [tag.label, tag.id] }, {},  multiple: true %>
-<%= select_tag :tags, options_for_select(Tag.all.map{ |tag| [tag.label, tag.id] }),  multiple: true %>
-
+  <%= select_tag :tags, options_for_select(Tag.all.map{ |tag| [tag.label, tag.id] }),  multiple: true %></dd>
+</dl>
 <%#= f.fields_for :tags do |tag_f| %>
   <%#= tag_f.label :label %>
 <%# end %>

@@ -60,7 +60,7 @@ class UsersController < ApplicationController
   private
     # Strong parameters that prevent mass assignment
     def user_params
-      params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar)
+      params.require(:user).permit(:name, :email, :password, :password_confirmation, :avatar, :avatar_cache, :remove_avatar)
     end
 
     # Confirms the correct user.

@@ -5,13 +5,16 @@
 <%= form_for(:session, url: login_path) do |f| %>
   <%#= render "shared/error_messages" %>
 
-  <%= f.label :email %>
-  <%= f.text_field :email %>
-
-  <%= f.label :password %>
-  <%= link_to "(forget password)", new_password_reset_path %>
-  <%= f.password_field :password %>
-
+  <dl>
+    <dt><%= f.label :email %></dt>
+    <dd><%= f.text_field :email %><dd>
+  </dl>
+  <dl>
+    <dt><%= f.label :password %></dt>
+    <dd><%= f.password_field :password %><br>
+        <%= link_to "(forget password)", new_password_reset_path %><dd>
+  </dl>
+  
   <%= f.label :remember_me, class: "checkbox inline" do %>
     <%= f.check_box :remember_me %>
     <span>Remember me on this computer<span>
