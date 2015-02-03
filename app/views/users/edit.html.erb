@@ -7,7 +7,7 @@
   <dl>
     <dt><%= f.label :avatar %></dt>
     <dd>
-      <%= image_tag @user.avatar.url, width: 200, height: 200 if @user.avatar? %>
+      <%= image_tag @user.avatar.thumb.url, width: 200, height: 200 if @user.avatar? %>
       <%= f.file_field :avatar %>
       <%= f.hidden_field :avatar_cache %>
       <br>

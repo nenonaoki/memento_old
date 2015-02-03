@@ -1,4 +1,5 @@
 <li>
+  <%= image_tag medium.poster.thumb.url, width: 160, height: 90 %>
   <%= link_to medium.title, medium %><br>
   <%= medium.description %>
   <% if current_user && current_user.admin? %>

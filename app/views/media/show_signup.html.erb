@@ -1,5 +1,7 @@
 <% provide(:title, @medium.title) %>
 
+<%= image_tag @medium.poster.url, width: 640, height: 360 %>
+
 <%= form_tag({ controller: :tickets, action: :checkin }, method: "post") do %>
   <%= hidden_field_tag 'ticket[medium_id]', @medium.id %>
   <%= text_field_tag 'ticket[serial_code]' %>

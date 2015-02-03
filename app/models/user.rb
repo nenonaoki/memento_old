@@ -1,5 +1,5 @@
 class User < ActiveRecord::Base
-  
+  # Carrierwave
   mount_uploader :avatar, AvatarUploader
 
   # Association

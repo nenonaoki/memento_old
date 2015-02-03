@@ -66,7 +66,7 @@ class MediaController < ApplicationController
   private
     # Strong parameters that prevent mass assignment
     def medium_params
-      params.require(:medium).permit(:title, :source, :description)
+      params.require(:medium).permit(:title, :source, :description, :poster, :poster_cache, :remove_poster)
     end
 
     def tag_params

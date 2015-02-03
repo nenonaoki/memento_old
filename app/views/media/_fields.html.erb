@@ -13,6 +13,16 @@
   <dd><%= f.text_area :description %></dd>
 </dl>
 <dl>
+  <dt><%= f.label :avatar %></dt>
+  <dd>
+    <%= image_tag @medium.poster.thumb.url, width: 160, height: 90 if @medium.poster? %>
+    <%= f.file_field :poster %>
+    <%= f.hidden_field :poster_cache %>
+    <br>
+    <label><%= f.check_box :remove_poster %> Remove poster</label>
+  </dd>
+</dl>
+<dl>
   <dt><%= label_tag :tags %></dt>
   <dd>
 <%#= f.collection_select :tags, Tag.all, :id, :label, {}, multiple: true %>

@@ -1,5 +1,7 @@
 <% provide(:title, @medium.title) %>
 
+<%= image_tag @medium.poster.url, width: 640, height: 360 %>
+
 <h1>Activate <%= @medium.title %></h1>
 <h2><%= pluralize(@medium.tags.count, "tag") %></h2>
 <ul>

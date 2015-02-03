@@ -1,4 +1,7 @@
 class Medium < ActiveRecord::Base
+  # Carrierwave
+  mount_uploader :poster, PosterUploader
+
   # Association
   has_one :currency
   has_many :users, through: :tickets
