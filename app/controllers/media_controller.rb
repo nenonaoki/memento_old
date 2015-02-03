@@ -13,16 +13,6 @@ class MediaController < ApplicationController
       @user = current_user 
       @comment = @user.comments.build
       @ticket = @medium.tickets.find_by(user_id: @user.id)
-    
-      if @ticket && @ticket.activated?
-        render 'show' # Video playable
-      elsif @ticket && @ticket.checked_in?
-        render 'show_activate'
-      else
-        render 'show_checkin' # Video playable
-      end
-    else
-      render 'show_signup'
     end
   end
 
