@@ -1,62 +1,69 @@
 <% provide(:title, @medium.title) %>
 
-<% if @ticket && @ticket.activated? %>
-  <div id="wistia_<%= @medium.source %>" class="wistia_embed" style="width:640px;height:360px;">&nbsp;</div>
-  <script>
-  wistiaEmbed = Wistia.embed("<%= @medium.source %>");
-  </script>
-<% else %>
-  <%= image_tag @medium.poster.url, width: 640, height: 360 %>
-<% end %>
+<div class="row">
+  <div class="col-sm-8">
 
-<% if @ticket.nil? %>
-  <%= form_tag({ controller: :tickets, action: :checkin }, method: "post") do %>
-    <%= hidden_field_tag 'ticket[medium_id]', @medium.id %>
-    <%= hidden_field_tag 'ticket[user_id]', current_user.id %>
-    <%= text_field_tag 'ticket[serial_code]' %>
-    <%= submit_tag "Post", class: "btn btn-primary" %>
-  <% end %>
-<% end %>
+    <% if @ticket && @ticket.activated? %>
+      <div id="wistia_<%= @medium.source %>" class="wistia_embed" style="width:640px;height:360px;">&nbsp;</div>
+      <script>
+      wistiaEmbed = Wistia.embed("<%= @medium.source %>");
+      </script>
+    <% else %>
+      <%= image_tag @medium.poster.url, width: 640, height: 360, class: "img-responsive" %>
+    <% end %>
 
-
-<h1><%= @medium.title %></h1>
-<h2><%= pluralize(@medium.tags.count, "tag") %></h2>
-<ul>
-  <% @medium.tags.each do |tag| %>
-    <li><%= link_to tag.label, tag %></li>
-  <% end %>
-</ul>
-<% if logged_in? && current_user.admin? %>
-    <p><%= link_to "Edit", edit_medium_path(@medium) %></p>
-<% end %>
-
-<p><%= @medium.description %></p>
-
-
-<% if @comments.any? %>
-  <h2><%= pluralize(@comments.count, "comment") %></h2>
-  <ul>
-  <% @comments.each do |comment| %>
-    <li>
-      <%= comment.body %> by <%= comment.user.name %>
-      <% if current_user?(comment.user) %>
-        <%= link_to "delete", comment, method: :delete, data: { confirm: "You sure?" } %>
+    <% if @ticket.nil? %>
+      <%= form_tag({ controller: :tickets, action: :checkin }, method: "post", class: "form-inline") do %>
+        <%= hidden_field_tag 'ticket[medium_id]', @medium.id %>
+        <%= hidden_field_tag 'ticket[user_id]', current_user.id %>
+        <%= text_field_tag 'ticket[serial_code]', "", class: "form-control" %>
+        <%= submit_tag "Post", class: "btn btn-primary" %>
       <% end %>
-    </li>
-  <% end %>
-  </ul>
-<% end %>
+    <% end %>
 
 
-<% if logged_in? %>
-  <%= form_for(@comment) do |f| %>
-    <%= render "shared/error_messages", m: @comment %>
+    <h1><%= @medium.title %></h1>
+    <h2><%= pluralize(@medium.tags.count, "tag") %></h2>
+    <ul>
+      <% @medium.tags.each do |tag| %>
+        <li><%= link_to tag.label, tag %></li>
+      <% end %>
+    </ul>
+    <% if logged_in? && current_user.admin? %>
+        <p><%= link_to "Edit", edit_medium_path(@medium) %></p>
+    <% end %>
 
-    <%= f.hidden_field :medium_id, value: @medium.id %>
+    <p><%= @medium.description %></p>
 
-    <%= f.label :body %>
-    <%= f.text_area :body %>
+  <!-- /main-col --></div>
+  <div class="col-sm-4">
 
-    <%= f.submit "Post", class: "btn btn-primary" %>
-  <% end %>
-<% end %>
+    <% if logged_in? %>
+      <%= form_for(@comment) do |f| %>
+        <div class="form-group">
+          <%= render "shared/error_messages", m: @comment %>
+
+          <%= f.hidden_field :medium_id, value: @medium.id %>
+          <%= f.text_area :body, class: "form-control" %>
+
+          <%= f.submit "Post", class: "btn btn-default" %>
+        </div>
+      <% end %>
+    <% end %>
+
+    <% if @comments.any? %>
+      <ul>
+      <% @comments.each do |comment| %>
+        <li>
+          <%= comment.body %> by <%= comment.user.name %>
+          <% if current_user?(comment.user) %>
+            <%= link_to "delete", comment, method: :delete, data: { confirm: "You sure?" } %>
+          <% end %>
+        </li>
+      <% end %>
+      </ul>
+      <h2><%= pluralize(@comments.count, "comment") %></h2>
+    <% end %>
+
+  <!-- /sub-col --></div>
+</div>

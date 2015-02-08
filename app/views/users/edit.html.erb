@@ -1,21 +1,35 @@
 <% provide(:title, 'Edit user') %>
 
-<h1>Edit @user</h1>
+<h1 class="page-header">ユーザー情報を編集</h1>
 
-<%= form_for(@user) do |f| %>
-  <%= render 'fields', f: f %>
-  <dl>
-    <dt><%= f.label :avatar %></dt>
-    <dd>
-      <%= image_tag @user.avatar.thumb.url, width: 200, height: 200 if @user.avatar? %>
-      <%= f.file_field :avatar %>
-      <%= f.hidden_field :avatar_cache %>
-      <br>
-      <label><%= f.check_box :remove_avatar %> Remove avatar</label>
-    </dd>
-  </dl>
-  
-  <%= f.submit "Save changes", class: "btn btn-primary" %>
-<% end %>
+<div class="jumbotron">
 
-<%#= gravatar_for @user %>
+  <%= form_for(@user, html: { class: "form-horizontal" }) do |f| %>
+
+    <dl class="form-group">
+      <dt class="col-sm-2"><%= f.label :name %></dt>
+      <dd class="col-sm-7"><%= f.text_field :name, class: "form-control" %></dd>
+      <dd class="col-sm-3">&nbsp;</dd>
+    </dl>
+
+    <%= render 'fields', f: f %>
+
+    <dl class="form-group">
+      <dt class="col-sm-2"><%= f.label :avatar %></dt>
+      <dd class="col-sm-7">
+        <p><%= image_tag @user.avatar.thumb.url, width: 200, height: 200, class: "img-thumbnail" if @user.avatar? %></p>
+        <p><%= f.file_field :avatar %></p>
+        <%= f.hidden_field :avatar_cache %>
+        <label><%= f.check_box :remove_avatar %> 画像を削除する</label>
+      </dd>
+      <dd class="col-sm-3">&nbsp;</dd>
+    </dl>
+
+    <dl class="form-group">
+      <dd class="col-sm-10 col-sm-offset-2">
+        <%= f.submit "変更を保存", class: "btn btn-primary" %>
+      </dd>
+    </dl>
+    
+  <% end %>
+</div>

@@ -3,7 +3,10 @@ Rails.application.routes.draw do
   devise_for :admin_users, ActiveAdmin::Devise.config
   ActiveAdmin.routes(self)
   
-  root 'users#new'
+  root 'pages#home'
+
+  # Static pages
+  get 'about' => 'pages#about'
 
   # Login / Logout routing
   get 'signup' => 'users#new'

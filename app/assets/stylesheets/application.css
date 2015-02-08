@@ -12,4 +12,11 @@
  *
  * require_tree .
  *= require_self
+ *= require _bootstrap.scss
+ *= require _bootstrap-sprockets.scss
+ *= require pages
  */
+
+ body {
+   padding-top: 60px;
+ }

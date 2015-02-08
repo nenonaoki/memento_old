@@ -46,15 +46,23 @@ group :development, :test do
   gem 'faker', '1.4.3'
 end
 
+group :test do
+  # Rspec
+  gem 'rspec-rails', '~> 3.0'
+
+  # Capybara
+  gem 'capybara'
+
+  # Coverage
+  gem 'simplecov', require: false
+end
+
 # Image uploader
 gem 'carrierwave'
 gem "mini_magick"
 
 # Config values
 gem 'rails_config'
-
-# Coverage
-gem 'simplecov', require: false, group: :test
 
 # ActiveAdmin (https://github.com/activeadmin/activeadmin)
 gem 'devise'

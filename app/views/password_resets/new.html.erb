@@ -1,12 +1,21 @@
 <% provide(:title, 'Forgot password') %>
 
-<h1>Forgot password</h1>
+<h1 class="page-header">パスワードのリセット</h1>
 
-<%= form_for(:password_reset, url: password_resets_path) do |f| %>
-  <%#= render "shared/error_messages" %>
+<div class="jumbotron">
+  <%= form_for(:password_reset, url: password_resets_path, html: { class: "form-horizontal" }) do |f| %>
+    <%#= render "shared/error_messages" %>
 
-  <%= f.label :email %>
-  <%= f.text_field :email %>
+    <dl class="form-group">
+      <dt class="col-sm-2"><%= f.label :email %></dt>
+      <dd class="col-sm-7"><%= f.text_field :email, class: "form-control" %></dd>
+      <dd class="col-sm-3">&nbsp;</dd>
+    </dl>
 
-  <%= f.submit "Submit", class: "btn btn-primary" %>
-<% end %>
+    <dl class="form-group">
+      <dd class="col-sm-10 col-sm-offset-2">
+        <%= f.submit "パスワードの再設定メールを送信", class: "btn btn-primary" %>
+      </dd>
+    </dl>
+  <% end %>
+</div>

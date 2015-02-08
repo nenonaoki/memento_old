@@ -1,21 +1,32 @@
 <% provide(:title, @user.name) %>
 
-<h1>My page</h1>
+<div class="row">
+  <div class="col-sm-2">
 
-<dl>
-  <dt>Name</dt>
-  <dd><%= @user.name %></dd>
-</dl>
-<dl>
-  <dt>Email</dt>
-  <dd><%= @user.email %></dd>
-</dl>
+    <div class="text-left"><%= link_to "編集", edit_user_path(@user), class: "btn btn-link btn-xs" %></div>
+    <p class="text-center"><%= image_tag @user.avatar.url, width: 150, height: 150, class: "img-thumbnail" %></p>
+    <p class="text-center"><%= @user.name %></p>
+    
 
-<%#= gravatar_for @user, size: 50 %> <%# From users_helper %>
+  <!-- /-col --></div>
+  <div class="col-sm-10">
 
-<dl>
-  <dt>Avatar</dt>
-  <dd>
-    <%= image_tag @user.avatar.url, width: 150, height: 150 %>
-  </dd>
-</dl>
+    <div class="row">
+      <% @user.media.each do |medium| %>
+        <div class="col-sm-6">
+          <%= link_to medium do %>
+            <div class="media">
+              <div class="media-left">
+                <p><%= image_tag medium.poster.thumb.url, width: 160, height: 90, class: "media-object" %></p>
+              </div>
+              <div class="media-body">
+                <p class="media-heading"><%= medium.title %></p>
+              </div>
+            </div>
+          <% end %>
+        </div>
+      <% end %>
+    </div>
+
+  <!-- /sub-col --></div>
+</div>
