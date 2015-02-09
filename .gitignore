@@ -24,3 +24,8 @@ config/environments/*.local.yml
 
 # Carrierwave
 public/uploads/
+
+# Node
+node_modules
+.sass-cache
+.tmp

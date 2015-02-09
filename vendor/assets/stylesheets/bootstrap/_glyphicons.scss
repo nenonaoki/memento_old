@@ -17,6 +17,15 @@
        url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.ttf'), '#{$icon-font-path}#{$icon-font-name}.ttf')) format('truetype'),
        url(if($bootstrap-sass-asset-helper, twbs-font-path('#{$icon-font-path}#{$icon-font-name}.svg##{$icon-font-svg-id}'), '#{$icon-font-path}#{$icon-font-name}.svg##{$icon-font-svg-id}')) format('svg');
 }
+// @font-face {
+//   font-family: 'Glyphicons Halflings';
+//   src: url('#{$icon-font-name}.eot');
+//   src: url('#{$icon-font-name}.eot?#iefix') format('embedded-opentype'),
+//        url('#{$icon-font-name}.woff2') format('woff2'),
+//        url('#{$icon-font-name}.woff') format('woff'),
+//        url('#{$icon-font-name}.ttf') format('truetype'),
+//        url('#{$icon-font-name}.svg##{$icon-font-svg-id}') format('svg');
+// }
 
 // Catchall baseclass
 .glyphicon {

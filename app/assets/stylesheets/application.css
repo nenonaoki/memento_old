@@ -12,8 +12,7 @@
  *
  * require_tree .
  *= require_self
- *= require _bootstrap.scss
- *= require _bootstrap-sprockets.scss
+ *= require bootstrap
  *= require pages
  */
 
