@@ -57,84 +57,69 @@ gulp.task('images', function () {
     .pipe($.size({ title: 'images' }));
 });
 
-// Copy Web Fonts To Dist
-gulp.task('fonts', function () {
-  return gulp.src(['app/fonts/**'])
-    .pipe(gulp.dest('dist/fonts'))
-    .pipe($.size({title: 'fonts'}));
-});
-
 // Compile and Automatically Prefix Stylesheets
 gulp.task('styles', function () {
   // For best performance, don't add Sass partials to `gulp.src`
   return gulp.src([
-      'app/styles/*.scss',
-      'app/styles/**/*.css',
-      'app/styles/components/components.scss'
+      'app/assets/styles/**/*.scss',
+      '!app/assets/styles/**/_*.scss'
     ])
-    .pipe($.changed('styles', {extension: '.scss'}))
+    .pipe($.changed('app/assets/stylesheets', { extension: '.scss' }))
     .pipe($.rubySass({
+        'sourcemap=none': true,
         style: 'expanded',
         precision: 10
       })
       .on('error', console.error.bind(console))
     )
     .pipe($.autoprefixer(AUTOPREFIXER_BROWSERS))
-    .pipe(gulp.dest('.tmp/styles'))
-    // Concatenate And Minify Styles
-    .pipe($.if('*.css', $.csso()))
-    .pipe(gulp.dest('dist/styles'))
-    .pipe($.size({title: 'styles'}));
+    .pipe(gulp.dest('app/assets/stylesheets'))
+    .pipe($.size({ title: 'styles' }));
 });
 
 // Scan Your HTML For Assets & Optimize Them
-gulp.task('html', function () {
-  var assets = $.useref.assets({searchPath: '{.tmp,app}'});
+// gulp.task('html', function () {
+//   var assets = $.useref.assets({searchPath: '{.tmp,app}'});
 
-  return gulp.src('app/**/*.html')
-    .pipe(assets)
-    // Concatenate And Minify JavaScript
-    .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
-    // Remove Any Unused CSS
-    // Note: If not using the Style Guide, you can delete it from
-    // the next line to only include styles your project uses.
-    .pipe($.if('*.css', $.uncss({
-      html: [
-        'app/index.html',
-        'app/styleguide.html'
-      ],
-      // CSS Selectors for UnCSS to ignore
-      ignore: [
-        /.navdrawer-container.open/,
-        /.app-bar.open/
-      ]
-    })))
-    // Concatenate And Minify Styles
-    // In case you are still using useref build blocks
-    .pipe($.if('*.css', $.csso()))
-    .pipe(assets.restore())
-    .pipe($.useref())
-    // Update Production Style Guide Paths
-    .pipe($.replace('components/components.css', 'components/main.min.css'))
-    // Output Files
-    .pipe(gulp.dest('dist'))
-    .pipe($.size({title: 'html'}));
-});
-
-// Clean Output Directory
-gulp.task('clean', del.bind(null, ['.tmp']));
+//   return gulp.src('app/**/*.html')
+//     .pipe(assets)
+//     // Concatenate And Minify JavaScript
+//     .pipe($.if('*.js', $.uglify({preserveComments: 'some'})))
+//     // Remove Any Unused CSS
+//     // Note: If not using the Style Guide, you can delete it from
+//     // the next line to only include styles your project uses.
+//     .pipe($.if('*.css', $.uncss({
+//       html: [
+//         'app/index.html',
+//         'app/styleguide.html'
+//       ],
+//       // CSS Selectors for UnCSS to ignore
+//       ignore: [
+//         /.navdrawer-container.open/,
+//         /.app-bar.open/
+//       ]
+//     })))
+//     // Concatenate And Minify Styles
+//     // In case you are still using useref build blocks
+//     .pipe($.if('*.css', $.csso()))
+//     .pipe(assets.restore())
+//     .pipe($.useref())
+//     // Update Production Style Guide Paths
+//     .pipe($.replace('components/components.css', 'components/main.min.css'))
+//     // Output Files
+//     .pipe(gulp.dest('dist'))
+//     .pipe($.size({title: 'html'}));
+// });
 
 // Watch Files For Changes
 gulp.task('serve', ['styles'], function () {
-  gulp.watch(['app/**/*.html'], reload);
-  gulp.watch(['app/styles/**/*.{scss,css}'], ['styles', reload]);
-  gulp.watch(['app/scripts/**/*.js'], ['jshint']);
-  gulp.watch(['app/images/**/*'], reload);
+  gulp.watch(['app/assets/styles/**/*.{scss,css}'], ['styles']);
+  // gulp.watch(['app/scripts/**/*.js'], ['jshint']);
 });
 
 // Build Production Files, the Default Task
-gulp.task('default', ['clean'], function (cb) {
-  runSequence('styles', ['jshint', 'html', 'images', 'fonts'], cb);
+gulp.task('default', function (cb) {
+  runSequence('styles', ['jshint', 'images'], cb);
 });
 
 // Run PageSpeed Insights
