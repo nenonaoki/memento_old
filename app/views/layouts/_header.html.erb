@@ -20,7 +20,7 @@
                   <span class="glyphicon glyphicon-user"></span> Usename
                 <% end %>
                 <%= link_to cart_path, class: "btn btn-default" do %>
-                  Cart <span class="glyphicon glyphicon-shopping-cart"></span>
+                  <span class="glyphicon glyphicon-shopping-cart"></span>
                 <% end %>
               </div>
             <% else %>
@@ -28,9 +28,9 @@
               <%= link_to "ユーザー登録", signup_path, class: "btn btn-primary" %>
             <% end %>
           </div>
-        <li>
+        </li>
         <li class="dropdown">
-          <a href="#" class="dropdown-toggle" data-toggle="dropdown">Menu<span class="glyphicon glyphicon-cog"></span></a>
+          <a href="#" class="dropdown-toggle" data-toggle="dropdown"><span class="glyphicon glyphicon-cog"></span></a>
           <ul class="dropdown-menu dropdown-menu-right">
             <li><%= link_to "Mementoとは", about_path %></li>
             <li><%= link_to "使い方", "#" %></li>
