@@ -13,7 +13,13 @@
   <dd><%= f.text_area :description %></dd>
 </dl>
 <dl>
-  <dt><%= f.label :avatar %></dt>
+  <dt><%= f.label :price %></dt>
+  <dd><%= f.text_field :price %>
+      <%= f.collection_select :currency_id, Currency.all, :id, :iso_code, class: "form-control" %>
+  </dd>
+</dl>
+<dl>
+  <dt><%= f.label :poster %></dt>
   <dd>
     <%= image_tag @medium.poster.thumb.url, width: 160, height: 90 if @medium.poster? %>
     <%= f.file_field :poster %>
@@ -27,7 +33,7 @@
   <dd>
 <%#= f.collection_select :tags, Tag.all, :id, :label, {}, multiple: true %>
 <%#= f.select :tags, Tag.all.map{ |tag| [tag.label, tag.id] }, {},  multiple: true %>
-  <%= select_tag :tags, options_for_select(Tag.all.map{ |tag| [tag.label, tag.id] }),  multiple: true %></dd>
+  <%= select_tag :tags, options_for_select(Tag.all.map{ |tag| [tag.label, tag.id] }), multiple: true %></dd>
 </dl>
 <%#= f.fields_for :tags do |tag_f| %>
   <%#= tag_f.label :label %>

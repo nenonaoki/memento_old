@@ -33,7 +33,7 @@ user_admin.roles.create!(group_id: group_admin.id,
                          title_id: title_manager.id)
 
 20.times do |n|
-  password = "password"
+  password = "foobar"
   User.create!(name:  Faker::Name.name,
                email: "example-#{n+1}@railstutorial.org",
                password:              password,
@@ -46,12 +46,16 @@ end
 # Seed for media
 Medium.create!(title:  "Peguin Cafe",
                source: "d46lnimzyt",
-               description: "text text text text text text")
+               description: "text text text text text text",
+               price: 1000,
+               currency_id: Currency.first.id)
 
 20.times do |n|
   Medium.create!(title: Faker::Name.title,
                  source: "oekwduqbgq",
-                 description: Faker::Lorem.sentence(10))
+                 description: Faker::Lorem.sentence(10),
+                 price: 1000,
+                 currency_id: Currency.first.id)
 end
 
 

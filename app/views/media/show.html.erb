@@ -2,6 +2,9 @@
 
 <div class="row">
   <div class="col-sm-8">
+    <% if logged_in? && current_user.admin? %>
+        <p><%= link_to "Edit", edit_medium_path(@medium) %></p>
+    <% end %>
 
     <% if @ticket && @ticket.activated? %>
       <div id="wistia_<%= @medium.source %>" class="wistia_embed" style="width:640px;height:360px;">&nbsp;</div>
@@ -13,6 +16,8 @@
     <% end %>
 
     <% if @ticket.nil? %>
+      <p><%= @medium.price %> <%= @medium.currency.iso_code %></p>
+
       <%= form_tag({ controller: :tickets, action: :checkin }, method: "post", class: "form-inline") do %>
         <%= hidden_field_tag 'ticket[medium_id]', @medium.id %>
         <%= hidden_field_tag 'ticket[user_id]', current_user.id %>
@@ -29,9 +34,6 @@
         <li><%= link_to tag.label, tag %></li>
       <% end %>
     </ul>
-    <% if logged_in? && current_user.admin? %>
-        <p><%= link_to "Edit", edit_medium_path(@medium) %></p>
-    <% end %>
 
     <p><%= @medium.description %></p>
 

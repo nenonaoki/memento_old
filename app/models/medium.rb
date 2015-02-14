@@ -3,7 +3,7 @@ class Medium < ActiveRecord::Base
   mount_uploader :poster, PosterUploader
 
   # Association
-  has_one :currency
+  belongs_to :currency
   has_many :users, through: :tickets
   has_many :tickets, dependent: :destroy
   has_many :comments, dependent: :destroy
@@ -20,6 +20,8 @@ class Medium < ActiveRecord::Base
   validates :title, presence: true
   validates :source, presence: true
   validates :description, length: { maximum: 255 }, allow_blank: true
+  validates :price, presence: true
+  validates :currency_id, presence: true
 
   # Add a tag on the medium.
   def tag(tag_instance)

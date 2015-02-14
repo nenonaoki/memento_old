@@ -18,6 +18,7 @@ class MediaController < ApplicationController
 
   def new
     @medium = Medium.new
+    # @medium.currency.build
   end
 
   def create
@@ -56,7 +57,15 @@ class MediaController < ApplicationController
   private
     # Strong parameters that prevent mass assignment
     def medium_params
-      params.require(:medium).permit(:title, :source, :description, :poster, :poster_cache, :remove_poster)
+      params.require(:medium).permit(
+        :title,
+        :source,
+        :description,
+        :poster,
+        :poster_cache,
+        :remove_poster,
+        :price,
+        :currency_id)
     end
 
     def tag_params

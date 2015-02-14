@@ -27,6 +27,8 @@ class User < ActiveRecord::Base
 
   validates :password, length: { minimum: 6 }, allow_blank: true
 
+  validates :webpay_id, length: { maximum: 255 }
+
 
   # Remembers a user in the database for use in persistent sessions.
   def remember

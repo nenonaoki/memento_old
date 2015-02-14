@@ -3,7 +3,7 @@ class TicketsController < ApplicationController
     @ticket = Ticket.find_by(medium_id: ticket_params[:medium_id])
     if @ticket.serial_code == ticket_params[:serial_code]
       @ticket.checkin ticket_params[:user_id]
-      flash[:danger] = 'Ticket checked in!'
+      flash[:success] = 'Ticket checked in!'
     else
       flash[:danger] = 'Invalid serial code'
     end

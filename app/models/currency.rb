@@ -1,3 +1,3 @@
 class Currency < ActiveRecord::Base
-  belongs_to :medium
+  has_one :medium
 end

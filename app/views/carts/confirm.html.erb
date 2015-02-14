@@ -1,30 +1,49 @@
 <% provide(:title, 'お支払い確認') %>
 
-<h1>お支払い</h1>
+<h1 class="page-header">お支払い確認</h1>
 
-<%= form_for @creditcard, url: cart_path do |f| %>
+<div class="jumbotron">
 
-  <%= f.label :name %>
-  <%= f.hidden_field :name %>
-  <%= @creditcard.name %>
+  <%= form_for @creditcard, url: cart_path, html: { class: "form-horizontal" } do |f| %>
+    <dl class="form-group">
+      <dt class="col-sm-2"><%= f.label :name %></dt>
+      <dd class="col-sm-7">
+        <%= f.hidden_field :name %>
+        <%= @creditcard.name %>
+      </dd>
+      <dd class="col-sm-3">&nbsp;</dd>
+    </dl>
+    <dl class="form-group">
+      <dt class="col-sm-2"><%= f.label :number %></dt>
+      <dd class="col-sm-7">
+        <%= f.hidden_field :number %>
+        <%= @creditcard.number %>
+      </dd>
+      <dd class="col-sm-3">&nbsp;</dd>
+    </dl>
+    <dl class="form-group">
+      <dt class="col-sm-2"><%= f.label :exp_month %></dt>
+      <dd class="col-sm-7">
+        <%= f.hidden_field :exp_month %>
+        <%= f.hidden_field :exp_year %>
+        <%= @creditcard.exp_month %> / <%= @creditcard.exp_year %>
+      </dd>
+      <dd class="col-sm-3">&nbsp;</dd>
+    </dl>
+    <dl class="form-group">
+      <dt class="col-sm-2"><%= f.label :cvc %></dt>
+      <dd class="col-sm-7">
+        <%= f.hidden_field :cvc %>
+        <%= @creditcard.cvc %>
+      </dd>
+      <dd class="col-sm-3">&nbsp;</dd>
+    </dl>
+    <dl class="form-group">
+      <dd class="col-sm-10 col-sm-offset-2">
+        <%= link_to 'Back', :back, class: "btn btn-default" %>
+        <%= f.submit "注文を確定", class: "btn btn-primary" %>
+      </dd>
+    </dl>
+  <% end %>
 
-  <%= f.label :number %>
-  <%= f.hidden_field :number %>
-  <%= @creditcard.number %>
-
-  <%= f.label :exp_month %>
-  <%= f.hidden_field :exp_month %>
-  <%= @creditcard.exp_month %>
-
-  <%= f.label :exp_year %>
-  <%= f.hidden_field :exp_year %>
-  <%= @creditcard.exp_year %>
-
-  <%= f.label :cvc %>
-  <%= f.hidden_field :cvc %>
-  <%= @creditcard.cvc %>
-
-  <%= link_to 'Back', :back %>
-  <%= f.submit "注文を確定", class: "btn btn-primary" %>
-<% end %>
-
+</div>

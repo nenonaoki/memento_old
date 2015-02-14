@@ -1,8 +1,14 @@
 <% provide(:title, 'お支払い') %>
 
-<h1>お支払い</h1>
+<h1 class="page-header">お支払い</h1>
 
-<%= form_for @creditcard, url: confirm_cart_path do |f| %>
-  <%= render 'fields', f: f %>
-  <%= f.submit "注文内容を確認", class: "btn btn-primary" %>
-<% end %>
+<div class="jumbotron">
+  <%= form_for @creditcard, url: confirm_cart_path, html: { class: "form-horizontal" } do |f| %>
+    <%= render 'fields', f: f %>
+    <dl class="form-group">
+      <dd class="col-sm-10 col-sm-offset-2">
+        <%= f.submit "注文内容を確認", class: "btn btn-primary" %>
+      </dd>
+    </dl>
+  <% end %>
+</div>
