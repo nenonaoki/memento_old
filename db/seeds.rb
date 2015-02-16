@@ -7,20 +7,24 @@
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
 # Seed for currencies
+Currency.delete_all
 Currency.create!(iso_code: "jpy")
 Currency.create!(iso_code: "usd")
 Currency.create!(iso_code: "eur")
 
 # Seed for titles
+Title.delete_all
 title_manager = Title.create!(name: "manager")
 title_editor = Title.create!(name: "editor")
 title_reader = Title.create!(name: "reader")
 
 # Seed for groups
+Group.delete_all
 group_admin = Group.create!(name: "admin")
 
 
 # Seed for users
+User.delete_all
 user_admin = User.create!(name:  "Admin User",
              email: "example@railstutorial.org",
              password:              "foobar",
@@ -29,6 +33,7 @@ user_admin = User.create!(name:  "Admin User",
              activated_at: Time.zone.now,
              admin: true)
 
+Role.delete_all
 user_admin.roles.create!(group_id: group_admin.id,
                          title_id: title_manager.id)
 
@@ -44,6 +49,7 @@ end
 
 
 # Seed for media
+Medium.delete_all
 Medium.create!(title:  "Peguin Cafe",
                source: "d46lnimzyt",
                description: "text text text text text text",
@@ -61,6 +67,7 @@ end
 
 # TODO: Add slugify helper
 # Seed for tags
+Tag.delete_all
 Tag.create!(slug: "fujirock",
             label: "Fujirock",
             description: Faker::Lorem.sentence(10))
@@ -79,6 +86,7 @@ end
 
 
 # Seed for tickets
+Ticket.delete_all
 Medium.all.each_with_index do |medium, index|
   user = User.first
 
@@ -100,6 +108,7 @@ end
 
 
 # Seed for comments
+Comment.delete_all
 media = Medium.order(:created_at).take(6)
 users = User.all.take(10)
 users.each do |user|
