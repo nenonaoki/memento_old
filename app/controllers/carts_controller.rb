@@ -1,9 +1,22 @@
 class CartsController < ApplicationController
+  def add
+    # session[:cart] ||= []
+    # session[:cart] << params[:medium_id]
+    session[:cart] = params[:medium_id]
+    redirect_to cart_path
+  end
+
+  def remove
+    session.delete(:cart)
+  end
+
   def new
+    @medium = Medium.find(session[:cart])
     @creditcard = Creditcard.new
   end
 
   def confirm
+    @medium = Medium.find(session[:cart])
     @creditcard = Creditcard.new(creditcard_params)
     if @creditcard.valid?
       render :confirm
@@ -13,6 +26,7 @@ class CartsController < ApplicationController
   end
 
   def create
+    @medium = Medium.find(session[:cart])
     require 'webpay'
     @creditcard = Creditcard.new(creditcard_params)
 

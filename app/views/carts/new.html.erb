@@ -2,6 +2,9 @@
 
 <h1>お支払い</h1>
 
+<%= image_tag @medium.poster.thumb.url, width: 160, height: 90 %>
+<%= link_to @medium.title, @medium %>
+
 <%= form_for @creditcard, url: confirm_cart_path do |f| %>
   <%= render 'fields', f: f %>
   <%= f.submit "注文内容を確認", class: "btn btn-primary" %>

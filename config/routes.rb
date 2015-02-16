@@ -1,25 +1,27 @@
 Rails.application.routes.draw do
 
-  devise_for :admin_users, ActiveAdmin::Devise.config
-  ActiveAdmin.routes(self)
-  
+  # devise_for :admin_users, ActiveAdmin::Devise.config
+  # ActiveAdmin.routes(self)
+
   root 'pages#home'
 
   # Static pages
-  get 'about' => 'pages#about'
+  get :about, to: 'pages#about'
 
   # Login / Logout routing
-  get 'signup' => 'users#new'
-  get 'login' => 'sessions#new'
-  post 'login' => 'sessions#create'
-  delete 'logout' => 'sessions#destroy'
+  get :signup, to: 'users#new'
+  get :login, to: 'sessions#new'
+  post :login, to: 'sessions#create'
+  delete :logout, to: 'sessions#destroy'
 
   # Cart routing
-  get 'cart' => 'carts#new'
+  get :cart, to: 'carts#new'
   resource :cart, only: [:create] do
     member do
       post :confirm
       get  :complete
+      put  'add/:medium_id' => 'carts#add', as: :add_to
+      put  'remove/:medium_id' => 'carts#remove', as: :remove_from
     end
   end
 
@@ -30,8 +32,8 @@ Rails.application.routes.draw do
   # end
 
   # Ticket routing
-  post 'checkin' => 'tickets#checkin'
-  post 'activate' => 'tickets#activate'
+  put 'checkin' => 'tickets#checkin'
+  put 'activate' => 'tickets#activate'
 
   # get 'users/new'
   resources :users

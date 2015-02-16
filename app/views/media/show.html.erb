@@ -3,24 +3,29 @@
 <div class="row">
   <div class="col-sm-8">
 
-    <% if @ticket && @ticket.activated? %>
-      <div id="wistia_<%= @medium.source %>" class="wistia_embed" style="width:640px;height:360px;">&nbsp;</div>
-      <script>
-      wistiaEmbed = Wistia.embed("<%= @medium.source %>");
-      </script>
+    <% unless @ticket.nil? %>
+      <% if @ticket.activated? %>
+        <div id="wistia_<%= @medium.source %>" class="wistia_embed" style="width:640px;height:360px;">&nbsp;</div>
+        <script>
+        wistiaEmbed = Wistia.embed("<%= @medium.source %>");
+        </script>
+      <% elsif @ticket.checked_in? %>
+        <%= image_tag @medium.poster.url, width: 640, height: 360, class: "img-responsive" %>
+
+        <%= form_tag(add_to_cart_path(@medium), method: "put", class: "form-inline") do %>
+          <%= submit_tag "購入", class: "btn btn-primary" %>
+        <% end %>
+      <% end %>
     <% else %>
       <%= image_tag @medium.poster.url, width: 640, height: 360, class: "img-responsive" %>
-    <% end %>
 
-    <% if @ticket.nil? %>
-      <%= form_tag({ controller: :tickets, action: :checkin }, method: "post", class: "form-inline") do %>
-        <%= hidden_field_tag 'ticket[medium_id]', @medium.id %>
-        <%= hidden_field_tag 'ticket[user_id]', current_user.id %>
-        <%= text_field_tag 'ticket[serial_code]', "", class: "form-control" %>
-        <%= submit_tag "Post", class: "btn btn-primary" %>
+      <%= form_for(:ticket, url: checkin_path, method: "put", class: "form-inline") do |f| %>
+        <%= f.hidden_field :medium_id, value: @medium.id %>
+        <%= f.hidden_field :user_id, value: current_user.id %>
+        <%= f.text_field :serial_code, value: "", class: "form-control" %>
+        <%= f.submit "チェックイン", class: "btn btn-primary" %>
       <% end %>
     <% end %>
-
 
     <h1><%= @medium.title %></h1>
     <h2><%= pluralize(@medium.tags.count, "tag") %></h2>
