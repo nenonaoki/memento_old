@@ -21,6 +21,9 @@
               </div>
               <div class="media-body">
                 <p class="media-heading"><%= medium.title %></p>
+                <% if @user.tickets.find_by(medium_id: medium.id).activated? %>
+                  <span class="glyphicon glyphicon-ok"></span>
+                <% end %>
               </div>
             </div>
           <% end %>

@@ -1,12 +1,26 @@
 class CartsController < ApplicationController
   before_action :logged_in_user
 
+  def add
+    # session[:cart] ||= []
+    # session[:cart] << params[:medium_id]
+    session[:cart] = params[:medium_id]
+    redirect_to cart_path
+  end
+
+  def remove
+    session.delete(:cart)
+  end
+
   def new
+    @medium = Medium.find(session[:cart]) unless session[:cart].nil?
     @creditcard = Creditcard.new
   end
 
   def confirm
+    @medium = Medium.find(session[:cart])
     @creditcard = Creditcard.new(creditcard_params)
+
     if @creditcard.valid?
       render :confirm
     else
@@ -15,19 +29,23 @@ class CartsController < ApplicationController
   end
 
   def create
+    @medium = Medium.find(session[:cart])
+    @creditcard = Creditcard.new(creditcard_params)
+
     webpay = WebPay.new(Settings.secrets.webpay)
     webpay.set_accept_language('ja')
 
-    @creditcard = Creditcard.new(creditcard_params)
-
     begin
       webpay_response = webpay.charge.create(
-        amount: 400,
-        currency: "jpy",
+        amount: @medium.price,
+        currency: @medium.currency.iso_code,
         card: creditcard_params,
-        description: "Memento media purchase" # optional
+        description: "Memento: #{@medium.title}" # optional
       )
       current_user.update(webpay_id: webpay_response.id)
+
+      ticket = current_user.tickets.find_by(medium_id: @medium.id)
+      ticket.activate
       redirect_to complete_cart_path
 
     rescue WebPay::ErrorResponse::ErrorResponseError => e
@@ -64,6 +82,7 @@ class CartsController < ApplicationController
   end
 
   def complete
+    session.delete(:cart)
   end
 
   private
