@@ -1,2 +1,14 @@
 <h1>Carts#complete</h1>
-<p>Find me in app/views/carts/complete.html.erb</p>
+
+<div class="panel panel-success">
+  <div class="panel-body">
+    Video successfully purchased!!
+  </div>
+</div>
+
+<p>
+  <% if @medium.present? %>
+    <%= link_to "購入した動画を見る", @medium, class: "btn btn-primary" %>
+  <% end %>
+  <%= link_to "マイページへ戻る", @user, class: "btn btn-default"  %>
+</p>

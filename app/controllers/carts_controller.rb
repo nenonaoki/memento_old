@@ -82,6 +82,8 @@ class CartsController < ApplicationController
   end
 
   def complete
+    @user = current_user
+    @medium = Medium.find(session[:cart]) if session[:cart].present?
     session.delete(:cart)
   end
 
