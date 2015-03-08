@@ -1,5 +1,7 @@
 <% provide(:title, @medium.title) %>
 
+<%= @medium.source_with_token %>
+
 <div class="row">
   <div class="col-sm-8">
     <% if logged_in? && current_user.admin? %>

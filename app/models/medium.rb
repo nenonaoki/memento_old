@@ -24,6 +24,14 @@ class Medium < ActiveRecord::Base
   validates :currency_id, presence: true
 
   # Add a tag on the medium.
+  def source_with_token()
+    # require 'digest'
+    # http://www.wowza.com/forums/content.php?620-How-to-protect-streaming-using-SecureToken-in-Wowza-Streaming-Engine
+    hash = Digest::SHA256.base64digest("Test/mp4:sample.mp4?#{Settings.secrets.wowza}").tr("+/", "-_") # SHA256 url_safe base64 encoding
+    "http://10.0.1.7:1935/Test/mp4:sample.mp4/manifest.mpd?wowzatokenhash=#{hash}"
+  end
+
+  # Add a tag on the medium.
   def tag(tag_instance)
     taggings.create(tag_id: tag_instance.id)
   end
