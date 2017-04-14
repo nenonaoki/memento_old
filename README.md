@@ -3,6 +3,10 @@ This repository is created to share the code in development for my own web servi
 
 [http://sample-env.vhzmgeeasq.ap-northeast-1.elasticbeanstalk.com/](http://sample-env.vhzmgeeasq.ap-northeast-1.elasticbeanstalk.com/)
 
+For login views:<br>
+Email: example@railstutorial.org<br>
+Password: foobar
+
 **Please note that some required security crendentials are not revealed in this respository so it will never run on the production mode as it is.**
 
 ## Technical stack
