@@ -1,81 +1,19 @@
 class MediaController < ApplicationController
-  before_action :admin_user, only: [:new, :create, :edit, :update, :destroy]
-
-  def index
-    @media = Medium.all
-  end
+  # include MediaHelper # app/helpers/media_helper.rb
 
   def show
-    @medium = Medium.find(params[:id])
-    @comments = @medium.comments.all
+    @medium = Medium.find_by(token: params[:token])
+    @tags = @medium.tags
+    @comments = @medium.comments
 
-    if logged_in?
-      @user = current_user 
-      @comment = @user.comments.build
-      @ticket = @medium.tickets.find_by(user_id: @user.id)
+    @json = JSON.parse(
+      render_to_string(
+        template: 'api/media/show.json.jbuilder',
+          locals: { :@medium => @medium, :@status => 200 }
+      )
+    )
+    respond_to do |format|
+      format.html
     end
   end
-
-  def new
-    @medium = Medium.new
-    # @medium.currency.build
-  end
-
-  def create
-    @medium = Medium.new(medium_params)
-    if @medium.save
-      @medium.update_tags(tag_params)
-      flash[:info] = "New medium created"
-      redirect_to @medium
-    else
-      render 'new'
-    end
-  end
-
-  def edit
-    @medium = Medium.find(params[:id])
-  end
-
-  def update
-    @medium = Medium.find(params[:id])
-    if @medium.update_attributes(medium_params)
-      @medium.update_tags(tag_params)
-      flash[:success] = "Medium updated"
-      redirect_to @medium
-    else
-      render 'edit'
-    end
-  end
-
-  # Destroy (destroy)
-  def destroy
-    Medium.find(params[:id]).destroy
-    flash[:success] = "Medium deleted"
-    redirect_to media_url
-  end
-
-  private
-    # Strong parameters that prevent mass assignment
-    def medium_params
-      params.require(:medium).permit(
-        :title,
-        :source,
-        :description,
-        :poster,
-        :poster_cache,
-        :remove_poster,
-        :price,
-        :currency_id)
-    end
-
-    def tag_params
-      params[:tags].nil? ? [] : params.require(:tags)
-    end
-
-    # Confirm an admin user.
-    def admin_user
-      if !logged_in? || !current_user.admin?
-        redirect_to(root_url)
-      end
-    end
 end

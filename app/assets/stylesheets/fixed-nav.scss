@@ -1,0 +1,67 @@
+/* ------------------------------------------
+  Overwrite
+--------------------------------------------- */
+.navbar-fixed-top {
+  z-index: 1000001;
+}
+
+/* ------------------------------------------
+  Collapse
+--------------------------------------------- */
+.nav-collapse {
+  position: absolute;
+  top: 50px;
+  left: 0;
+  right: 0;
+  background-color: #fff;
+  -webkit-transition: max-height 300ms;
+  transition: max-height 300ms;
+  max-height: 0;
+  overflow: hidden;
+}
+
+.nav-collapse ul {
+  margin: 0;
+  padding: 0 0 10px 0;
+  display: block;
+  list-style: none;
+}
+.nav-collapse form {
+  max-width: 480px;
+  padding: 10px;
+}
+.nav-collapse.opened {
+  max-height: 400px;
+}
+
+/* ------------------------------------------
+  MASK
+--------------------------------------------- */
+.mask {
+  background: rgba(0,0,0, .5);
+  position: fixed;
+  z-index: 1000000;
+  bottom: 0;
+  right: 0;
+  left: 0;
+  top: 0;
+}
+
+
+#frontHero {
+  height: 60vh;
+  padding-top: 16vh;
+  background: url(/images/home/bg.jpg) center center no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+
+  color: #ffffff;
+
+  form {
+    max-width: 450px;
+
+    input {
+      color: #676a6c;
+    }
+  }
+}

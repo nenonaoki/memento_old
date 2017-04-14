@@ -1,29 +1,19 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <meta charset="UTF-8">
+  <meta name="theme-color" content="#1ab394">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0">
   <title><%= full_title(yield(:title)) %></title>
-  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1,user-scalable=no">
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
+  <link rel="manifest" href="manifest.json">
+  <%= stylesheet_link_tag 'application', media: 'all' %>
   <%= csrf_meta_tags %>
-  <script charset="ISO-8859-1" src="//fast.wistia.com/assets/external/E-v1.js"></script>
 </head>
-<body>
-
-<%= render "layouts/header" %>
-
-<div class="container">
-  <% flash.each do |message_type, message| %>
-    <%= content_tag(:div, message, class: "alert alert-#{message_type}") %>
-  <% end %>
+<body class="top-navigation fixed-nav">
 
   <%= yield %>
-</div>
+  <%= debug(params) if Rails.env.development? %>
 
-<%= render "layouts/footer" %>
-
-<%= debug(params) if Rails.env.development? %>
-
+  <script src="/krpano/krpano.js"></script>
+  <%= javascript_include_tag 'application' %>
 </body>
 </html>

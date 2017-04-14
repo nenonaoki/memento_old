@@ -1,33 +1,30 @@
 class Ticket < ActiveRecord::Base
-  # Association
-  belongs_to :user
   belongs_to :medium
+  belongs_to :user
 
-  before_create :create_serial_code
+  before_create :create_serial
 
-  # Returns a random token. (Class method)
-  def self.new_serial_code
-    loop do
-      temp_code = Array.new(16){ rand(10) }.join.to_s # 16 charactors by default
-      break temp_code unless self.exists?(serial_code: temp_code)
+  validates :medium_id, presence: true
+
+  # Return a serial number.
+  def self.new_serial
+    letters = [('0'..'9'), ('A'..'Z')].map { |i| i.to_a }.flatten
+    tmp_serial = (0...16).map { letters[rand(letters.length)] }.join
+    self.find_by(serial: tmp_serial).blank? ? tmp_serial : self.new_serial
+  end
+
+  def check_in(user)
+    if user
+      update_columns(user_id: user.id,
+                     checked_in:  true,
+                     checked_in_at: Time.zone.now)
+    else
+      raise ArgumentError, "User has to be passed to the first argument"
     end
   end
 
-  # Check in a ticket.
-  def checkin(user_id)
-    update_columns(user_id: user_id,
-                   checked_in: true,
-                   checked_in_at: Time.zone.now)
-  end
-
-  # Activate a ticket.
-  def activate
-    update_columns(activated: true,
-                   activated_at: Time.zone.now)
-  end
-
   private
-    def create_serial_code
-        self.serial_code = Ticket.new_serial_code
+    def create_serial
+      self.serial = self.class.new_serial
     end
 end

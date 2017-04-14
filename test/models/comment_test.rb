@@ -1,13 +1,11 @@
 require 'test_helper'
 
 class CommentTest < ActiveSupport::TestCase
-  # TODO: Need Unit Test for Comment model
   def setup
     @user = users(:michael)
-    @medium = media(:one)
-    @comment = @user.comments.build(body: "Lorem ipsum",
-                                    user_id: @user.id,
-                                    medium_id: @medium.id)
+    @medium = media(:medium_0)
+    # This code is not idiomatically correct.
+    @comment = @user.comments.build(content: "Lorem ipsum", medium_id: @medium.id) # Comment.new(content: "Lorem ipsum", user_id: @user.id)
   end
 
   test "should be valid" do
@@ -24,18 +22,17 @@ class CommentTest < ActiveSupport::TestCase
     assert_not @comment.valid?
   end
 
-  test "body should be present" do
-    @comment.body = "   "
+  test "content should be present" do
+    @comment.content = "   "
     assert_not @comment.valid?
   end
 
-  test "content body be at most 100 characters" do
-    @comment.body = "a" * 101
+  test "content should be at most 140 characters" do
+    @comment.content = "a" * 141
     assert_not @comment.valid?
   end
 
   test "order should be most recent first" do
-    assert_equal Comment.first, comments(:most_recent)
+    assert_equal comments(:most_recent), Comment.first
   end
-
 end

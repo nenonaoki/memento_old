@@ -1,53 +1,10 @@
 Rails.application.routes.draw do
 
-  # devise_for :admin_users, ActiveAdmin::Devise.config
-  # ActiveAdmin.routes(self)
-
-  root 'pages#home'
-
-  # Static pages
-  get :about, to: 'pages#about'
-
-  # Login / Logout routing
-  get :signup, to: 'users#new'
-  get :login, to: 'sessions#new'
-  post :login, to: 'sessions#create'
-  delete :logout, to: 'sessions#destroy'
-
-  # Cart routing
-  get :cart, to: 'carts#new'
-  resource :cart, only: [:create] do
-    member do
-      post :confirm
-      get  :complete
-      put  'add/:medium_id' => 'carts#add', as: :add_to
-      put  'remove/:medium_id' => 'carts#remove', as: :remove_from
-    end
-  end
-
-  # scope :cart do
-
-  #   post 'confirm' => 'carts#confirm'
-  #   post 'complete' => 'carts#complete'
-  # end
-
-  # Ticket routing
-  put 'checkin' => 'tickets#checkin'
-  put 'activate' => 'tickets#activate'
-
-  # get 'users/new'
-  resources :users
-  resources :account_activations, only: [:edit]
-  resources :password_resets,     only: [:new, :create, :edit, :update]
-  resources :media
-  resources :tags
-  resources :comments,            only: [:create, :destroy]
-
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
   # You can have the root of your site routed with "root"
-  # root 'welcome#index'
+  root 'pages#home'
 
   # Example of regular route:
   #   get 'products/:id' => 'catalog#view'
@@ -55,8 +12,66 @@ Rails.application.routes.draw do
   # Example of named route that can be invoked with purchase_url(id: product.id)
   #   get 'products/:id/purchase' => 'catalog#purchase', as: :purchase
 
+  # get 'about' => 'pages#about'
+  # get 'terms' => 'pages#terms'
+  # get 'privacy' => 'pages#privacy'
+  get 'signup' => 'users#new'
+  get 'login' => 'sessions#new'
+  post 'login' => 'sessions#create'
+  delete 'logout' => 'sessions#destroy'
+  get 'search' => 'searches#index'
+
+  # get 'media/:token' => 'media#show', as: :medium
+
   # Example resource route (maps HTTP verbs to controller actions automatically):
   #   resources :products
+
+  resource :account, only: [:show]
+  resource :setting, only: [:show] do
+    member do
+      get :display_name
+      get :description
+      get :email
+      get :password
+      get :avatar
+      get :cover
+    end
+  end
+  resources :users, param: :name, except: [:index]
+  resources :account_activations, only: [:edit]
+  resources :password_resets, only: [:new, :edit]
+  resources :new_emails, only: [:edit]
+  resources :comments, only: [:create, :destroy]
+  resources :media, param: :token, only: [:show] do
+    member do
+      post :check_in
+    end
+  end
+  resources :tags, param: :slug, only: [:show]
+
+  namespace :api, { format: 'json' } do
+    post 'login'   => 'sessions#create'
+    delete 'logout'  => 'sessions#destroy'
+    get 'search' => 'searches#index'
+    resources :users, param: :name, except: [:index] do
+      member do
+        # get :timeline
+        get :history
+      end
+    end
+    resources :password_resets, only: [:create, :update]
+    resources :new_emails, only: [:create, :update]
+    resources :comments, only: [:create, :destroy]
+    resources :media, param: :token, only: [:show] do
+      member do
+        post :check_in
+      end
+      resources :comments, only: [:index, :create, :destroy]
+    end
+    resources :tags, param: :slug, only: [:show]
+  end
+
+  get 'api/media/:token/viewer' => 'api/media#viewer', defaults: { format: 'xml' }
 
   # Example resource route with options:
   #   resources :products do

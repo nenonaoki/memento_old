@@ -1,25 +1,9 @@
-<footer>
-  <div class="container-fluid">
-    <div class="text-center">
-      <%= link_to "よくあるご質問", "#", class: "btn btn-link btn-sm" %>
-      <%= link_to "会社概要", "#", class: "btn btn-link btn-sm" %>
-      <%= link_to "利用規約", "#", class: "btn btn-link btn-sm" %>
-      <%= link_to "プライバシーポリシー", "#", class: "btn btn-link btn-sm" %>
-      <%= link_to "特定商取引法に基づく表示", "#", class: "btn btn-link btn-sm" %>
-      <%= link_to "お問い合わせ", "#", class: "btn btn-link btn-sm" %>
-    </div>
-    <div class="text-center">&copy; Memento Inc.</div>
-  </div>
+<footer class="footer">
+  <nav>
+    <ul>
+      <li><%= link_to "About", :about %></li>
+      <li><%= link_to "Terms of Use", :terms %></li>
+      <li><%= link_to "Privacy Policy", :privacy %></li>
+    </ul>
+  </nav>
 </footer>
-
-<ul>
-  <% if logged_in? %>
-    <% if current_user.admin? %>
-      <li><%= link_to "Users", users_path %></li>
-      <li><%= link_to "Media", media_path %></li>
-      <li><%= link_to "Add Medium", new_medium_path %></li>
-      <li><%= link_to "Tags", tags_path %></li>
-      <li><%= link_to "Add Tag", new_tag_path %></li>
-    <% end %>
-  <% end %>
-</ul>

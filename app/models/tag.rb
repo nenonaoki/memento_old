@@ -1,12 +1,9 @@
 class Tag < ActiveRecord::Base
-  # Association
-  has_many :media, through: :taggings
-  has_many :taggings
+  has_many :medium_tags
+  has_many :media, through: :medium_tags
 
-  # self.primary_key = :id
-
-  validates :slug, presence: true, uniqueness: true
-  validates :label, presence: true, uniqueness: true
-  validates :description, length: { maximum: 255 }, allow_blank: true
-
+  # Override defalt param http://xoyip.hatenablog.com/entry/2014/05/20/200000
+  def to_param
+    return slug
+  end
 end

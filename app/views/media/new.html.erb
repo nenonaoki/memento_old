@@ -1,8 +1,0 @@
-<% provide(:title, 'New medium') %>
-
-<h1>New medium</h1>
-
-<%= form_for(@medium) do |f| %>
-  <%= render 'fields', f: f %>
-  <%= f.submit "Add this medium", class: "btn btn-primary" %>
-<% end %>

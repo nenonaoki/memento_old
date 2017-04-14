@@ -1,78 +1,44 @@
 class Medium < ActiveRecord::Base
-  # Carrierwave
-  mount_uploader :poster, PosterUploader
+  @@paginates_per = 5
 
-  # Association
-  belongs_to :currency
-  has_many :users, through: :tickets
+  # http://qiita.com/ainame/items/eb9dcf7862630c44d5e9
+
   has_many :tickets, dependent: :destroy
   has_many :comments, dependent: :destroy
-  has_many :tags, through: :taggings
-  has_many :taggings, dependent: :destroy
+  has_many :medium_tags
+  has_many :tags, through: :medium_tags
 
-  accepts_nested_attributes_for :tickets, :taggings
+  before_create :create_token
 
-  # self.primary_key = :id
+  default_scope -> { order(created_at: :desc) } # Proc or lambda
+  scope :recent_after, -> last_id { where(Medium.arel_table[:id].gt last_id) }
+  scope :past_before, -> first_id { where(Medium.arel_table[:id].lt first_id) }
 
-  before_create :create_code # Invoked when created
+  validates :title, presence: true, length: { maximum: 50 }
+  # validates :duration, presence: true, numericality: { only_integer: true }
 
-  # validates :id, presence: true#, length: { is: 16 }, uniqueness: true
-  validates :title, presence: true
-  validates :source, presence: true
-  validates :description, length: { maximum: 255 }, allow_blank: true
-  validates :price, presence: true
-  validates :currency_id, presence: true
+  paginates_per @@paginates_per
 
-  # Add a tag on the medium.
-  def source_with_token()
-    # require 'digest'
-    # http://www.wowza.com/forums/content.php?620-How-to-protect-streaming-using-SecureToken-in-Wowza-Streaming-Engine
-    hash = Digest::SHA256.base64digest("Test/mp4:sample.mp4?#{Settings.secrets.wowza}").tr("+/", "-_") # SHA256 url_safe base64 encoding
-    "http://10.0.1.7:1935/Test/mp4:sample.mp4/manifest.mpd?wowzatokenhash=#{hash}"
+  # Returns a random token.
+  def self.new_token
+    tmp_token = SecureRandom.urlsafe_base64(6)
+    self.find_by(token: tmp_token).blank? ? tmp_token : self.new_token
   end
 
-  # Add a tag on the medium.
-  def tag(tag_instance)
-    taggings.create(tag_id: tag_instance.id)
+  # Returns a paginates_per value.
+  def self.paginates_per
+    @@paginates_per
   end
 
-  # Remove a tag from the medium.
-  def untag(tag_instance)
-    taggings.find_by(tag_id: tag_instance.id).destroy
-  end
-
-  # Return true if the current medium has a given tag.
-  def tag?(tag_instance)
-    tags.include?(tag_instance)
-  end
-
-  # Update taggings based on tag ids in a list.
-  def update_tags(tag_ids)
-    tags.each do |tag_instance|
-      untag(tag_instance)
-    end
-
-    tags.reload
-
-    tag_ids.each do |tag_id|
-      tag_instance = Tag.find(tag_id)
-      tag(tag_instance) unless tag?(tag_instance)
-    end
-  end
-
-  # Returns a random code. (Class method)
-  def self.new_code
-    loop do
-      temp_code = SecureRandom.urlsafe_base64(nil, false) # 16 charactors by default
-      break temp_code unless self.exists?(code: temp_code)
-    end
+  # Override defalt param http://xoyip.hatenablog.com/entry/2014/05/20/200000
+  def to_param
+    return token
   end
 
   private
 
-    # Creates Primary key with random string
-    def create_code
-      self.code = Medium.new_code
+    # Creates and assigns the activation token and digest.
+    def create_token
+      self.token = self.class.new_token
     end
-
 end

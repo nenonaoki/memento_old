@@ -1,33 +1,10 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  code: <%= Medium.new_code %>
-  title: Example Video 1
-  source: https://example.com/path/to/video1.file
-  description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos quaerat id dolor ratione quae molestiae minus praesentium placeat illum earum incidunt perspiciatis, in alias sequi nisi, odit voluptatem ea.
-
-two:
-  code: <%= Medium.new_code %>
-  title: Example Video 2
-  source: https://example.com/path/to/video2.file
-  description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos quaerat id dolor ratione quae molestiae minus praesentium placeat illum earum incidunt perspiciatis, in alias sequi nisi, odit voluptatem ea.
-
-three:
-  code: <%= Medium.new_code %>
-  title: Example Video 3
-  source: https://example.com/path/to/video3.file
-  description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos quaerat id dolor ratione quae molestiae minus praesentium placeat illum earum incidunt perspiciatis, in alias sequi nisi, odit voluptatem ea.
-
-four:
-  code: <%= Medium.new_code %>
-  title: Example Video 4
-  source: https://example.com/path/to/video4.file
-  description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Quos eos quaerat id dolor ratione quae molestiae minus praesentium placeat illum earum incidunt perspiciatis, in alias sequi nisi, odit voluptatem ea.
-
 <% 30.times do |n| %>
-video_<%= n %>:
-  code: <%= Medium.new_code %>
-  title:  <%= "Example Video 1#{n}" %>
-  source: <%= "https://example.com/path/to/video#{n}.file" %>
-  description: Lorem ipsum dolor sit amet, consectetur adipisicing elit. Assumenda fuga accusamus excepturi sequi possimus delectus reprehenderit pariatur qui placeat magni earum harum iure, eos et tempora fugiat consequuntur, voluptates, laudantium.
+medium_<%= n %>:
+  token: <%= Medium.new_token %>
+  title: MyString
+  description: MyText
+  source: MyString
+  duration: 1
 <% end %>

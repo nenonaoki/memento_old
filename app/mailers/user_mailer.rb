@@ -1,5 +1,4 @@
 class UserMailer < ApplicationMailer
-  default from: "noreply@example.com"
 
   # Subject can be set in your I18n file at config/locales/en.yml
   # with the following lookup:
@@ -19,5 +18,15 @@ class UserMailer < ApplicationMailer
   def password_reset(user)
     @user = user
     mail to: user.email, subject: "Password reset"
+  end
+
+  # Subject can be set in your I18n file at config/locales/en.yml
+  # with the following lookup:
+  #
+  #   en.user_mailer.password_reset.subject
+  #
+  def new_email(user)
+    @user = user
+    mail to: user.new_email, subject: "New e-mail"
   end
 end

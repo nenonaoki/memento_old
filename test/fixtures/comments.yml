@@ -1,33 +1,57 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 orange:
-  body: <%= Faker::Lorem.sentence(5) %>
-  user: michael
-  medium: one
+  content: "I just ate an orange!"
   created_at: <%= 10.minutes.ago %>
+  user: michael
+  medium: medium_0
 
 tau_manifesto:
-  body: <%= Faker::Lorem.sentence(5) %>
-  user: michael
-  medium: one
+  content: "Check out the @tauday site by @mhartl: http://tauday.com"
   created_at: <%= 3.years.ago %>
+  user: michael
+  medium: medium_0
 
 cat_video:
-  body: <%= Faker::Lorem.sentence(5) %>
-  user: michael
-  medium: one
+  content: "Sad cats are sad: http://youtu.be/PKffm2uI4dk"
   created_at: <%= 2.hours.ago %>
+  user: michael
+  medium: medium_0
+
+ants:
+  content: "Oh, is that what you want? Because that's how you get ants!"
+  created_at: <%= 2.years.ago %>
+  user: archer
+  medium: medium_0
+
+zone:
+  content: "Danger zone!"
+  created_at: <%= 3.days.ago %>
+  user: archer
+  medium: medium_0
+
+tone:
+  content: "I'm sorry. Your words made sense, but your sarcastic tone did not."
+  created_at: <%= 10.minutes.ago %>
+  user: lana
+  medium: medium_0
+
+van:
+  content: "Dude, this van's, like, rolling probable cause."
+  created_at: <%= 4.hours.ago %>
+  user: lana
+  medium: medium_0
 
 most_recent:
-  body: <%= Faker::Lorem.sentence(5) %>
-  user: michael
-  medium: one
+  content: "Writing a short test"
   created_at: <%= Time.zone.now %>
+  user: michael
+  medium: medium_0
 
 <% 30.times do |n| %>
 comment_<%= n %>:
-  body: <%= Faker::Lorem.sentence(5) %>
-  user: michael
-  medium: one
+  content: <%= Faker::Lorem.sentence(5) %>
   created_at: <%= 42.days.ago %>
+  user: michael
+  medium: medium_1
 <% end %>

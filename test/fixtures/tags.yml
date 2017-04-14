@@ -1,11 +1,11 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  slug: fujirock
-  label: Fujirock
+  label: MyString
+  slug: MyString
   description: MyText
 
 two:
-  slug: summersonic
-  label: SummerSonic
+  label: MyString
+  slug: MyString
   description: MyText

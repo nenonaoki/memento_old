@@ -1,0 +1,24 @@
+{
+  // http://eslint.org/docs/rules/
+  "parser": "babel-eslint",
+  "extends": "airbnb",
+  "plugins": [
+    "react"
+  ],
+  "globals": {
+    "embedpano": false
+  },
+  "rules": {
+    // https://github.com/yannickcr/eslint-plugin-react/blob/master/docs/rules/sort-comp.md
+    "react/sort-comp": [0, {
+      "order": [
+        "type-annotations",
+        "static-methods",
+        "lifecycle",
+        "everything-else",
+        "render",
+      ]
+    }],
+    "react/jsx-boolean-value": 0
+  }
+}

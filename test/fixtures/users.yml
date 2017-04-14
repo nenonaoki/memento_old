@@ -6,7 +6,8 @@ michael:
   password_digest: <%= User.digest('password') %>
   activated: true
   activated_at: <%= Time.zone.now %>
-  admin: true
+  avatar: <%= File.open(File.join(Rails.root, "public/images/user/avatar/avatar.png")) %>
+  cover: <%= File.open(File.join(Rails.root, "public/images/user/cover/cover.jpg")) %>
 
 archer:
   name: Sterling Archer
@@ -19,11 +20,11 @@ lana:
   name: Lana Kane
   email: hands@example.gov
   password_digest: <%= User.digest('password') %>
-  activated: false
+  activated: true
   activated_at: <%= Time.zone.now %>
 
-mallory:
-  name: Mallory Archer
+malory:
+  name: Malory Archer
   email: boss@example.gov
   password_digest: <%= User.digest('password') %>
   activated: true

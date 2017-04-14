@@ -1,6 +1,0 @@
-<li>
-  <%= link_to tag.label, tag %>
-  <% if current_user.admin? %>
-    <%= link_to "delete", tag, method: :delete, data: { confirm: "You sure?" } %>
-  <% end %>
-</li>

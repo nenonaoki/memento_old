@@ -1,16 +1,3 @@
-<% provide(:title, 'ユーザー登録') %>
+<% provide(:title, "Sign up") %>
 
-<h1 class="page-header">ユーザー登録</h1>
-
-<div class="jumbotron">
-  <%= form_for(@user, html: { class: "form-horizontal" }) do |f| %>
-    <%= render 'fields', f: f %>
-
-
-    <dl class="form-group">
-      <dd class="col-sm-10 col-sm-offset-2">
-        <%= f.submit "新規ユーザー登録", class: "btn btn-primary" %>
-      </dd>
-    </dl>
-  <% end %>
-</div>
+<%= render_react_component %>

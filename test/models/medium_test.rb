@@ -1,11 +1,9 @@
 require 'test_helper'
 
 class MediumTest < ActiveSupport::TestCase
-  # TODO: Need Unit Test for Medium model
   def setup
-    @medium = Medium.new(title: "Example Video",
-                         source: "http://example.com/path/to/medium.file",
-                         description: "Lorem ipsum dolor sit amet")
+    @medium = Medium.new(title: "Media Title", description: "text text text",
+                         source: "path/to/media", duration: 100000)
   end
 
   test "should be valid" do
@@ -13,20 +11,28 @@ class MediumTest < ActiveSupport::TestCase
   end
 
   test "title should be present" do
-    @medium.title = ""
+    @medium.title = "   "
     assert_not @medium.valid?
   end
 
-  test "source should be present" do
-    @medium.source = ""
+  test "title should not be too long" do
+    @medium.title = "a" * 51
     assert_not @medium.valid?
   end
 
-  test "description should be at most 255 charactors" do
-    @medium.description = ""
-    assert @medium.valid?
-    @medium.description = "a" * 256
+  test "duration should be present" do
+    @medium.duration = "   "
     assert_not @medium.valid?
   end
 
+  test "duration should be interger" do
+    @medium.duration = 100000.5
+    assert_not @medium.valid?
+  end
+
+  test "to_param should not be id but token" do
+    @medium.save
+    assert_not_equal @medium.to_param, @medium.id
+    assert_equal @medium.to_param, @medium.token
+  end
 end

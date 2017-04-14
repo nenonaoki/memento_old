@@ -6,114 +6,75 @@
 #   cities = City.create([{ name: 'Chicago' }, { name: 'Copenhagen' }])
 #   Mayor.create(name: 'Emanuel', city: cities.first)
 
-# Seed for currencies
-Currency.delete_all
-Currency.create!(iso_code: "jpy")
-Currency.create!(iso_code: "usd")
-Currency.create!(iso_code: "eur")
+# Administrators
+Administrator.create!(name:                  "admin",
+                      email:                 "admin@memento.com",
+                      password:              "foobar",
+                      password_confirmation: "foobar")
 
-# Seed for titles
-Title.delete_all
-title_manager = Title.create!(name: "manager")
-title_editor = Title.create!(name: "editor")
-title_reader = Title.create!(name: "reader")
-
-# Seed for groups
-Group.delete_all
-group_admin = Group.create!(name: "admin")
-
-
-# Seed for users
-User.delete_all
-user_admin = User.create!(name:  "Admin User",
-             email: "example@railstutorial.org",
+# Users
+User.create!(name:                  "testuser",
+             display_name:          "testuser",
+             email:                 "example@railstutorial.org",
              password:              "foobar",
              password_confirmation: "foobar",
              activated: true,
              activated_at: Time.zone.now,
-             admin: true)
+             avatar:                "12e342f1bb22f7b9fa6b91259af151ea.png",
+             cover:                 "64f987e01be7ded02478e4b12336d239.png")
 
-Role.delete_all
-user_admin.roles.create!(group_id: group_admin.id,
-                         title_id: title_manager.id)
-
-20.times do |n|
-  password = "foobar"
-  User.create!(name:  Faker::Name.name,
-               email: "example-#{n+1}@railstutorial.org",
+49.times do |n|
+  # name  = FFaker::Name.name
+  name = FFaker::InternetSE.user_name_variant_short + "#{n+1}"
+  while name.size > 15 do
+    name = FFaker::InternetSE.user_name_variant_short + "#{n+1}"
+  end
+  email = "example-#{n+1}@railstutorial.org"
+  password = "password"
+  User.create!(name:                  name,
+               display_name:          name,
+               email:                 email,
                password:              password,
                password_confirmation: password,
-               activated: true,
-               activated_at: Time.zone.now)
+               activated:             true,
+               activated_at:          Time.zone.now)
 end
 
+# Media
+18.times do |n|
+  title = FFaker::Movie.title
+  description = FFaker::Lorem.paragraphs
+  Medium.create(title: title,
+                description: description)
+end
 
-# Seed for media
-Medium.delete_all
-Medium.create!(title:  "Peguin Cafe",
-               source: "d46lnimzyt",
-               description: "text text text text text text",
-               price: 1000,
-               currency_id: Currency.first.id)
-
+# Tags
 20.times do |n|
-  Medium.create!(title: Faker::Name.title,
-                 source: "oekwduqbgq",
-                 description: Faker::Lorem.sentence(10),
-                 price: 1000,
-                 currency_id: Currency.first.id)
+  label = FFaker::Lorem.word
+  slug = FFaker::InternetSE.slug(label, '_')
+  description = FFaker::Lorem.paragraphs
+  tag = Tag.create(label: label, slug: slug,
+                description: description)
+
+  count = (n >= Medium.count ? n % Medium.count : n) + 1
+  Medium.find(count).tags << tag
 end
 
+# Tickets
+users = User.order(:created_at).take(10)
+users.each { |user|
+  Medium.offset(rand(Medium.count)).each { |medium|
+    ticket = medium.tickets.create
+    ticket.check_in(user)
+  }
+}
 
-# TODO: Add slugify helper
-# Seed for tags
-Tag.delete_all
-Tag.create!(slug: "fujirock",
-            label: "Fujirock",
-            description: Faker::Lorem.sentence(10))
-
-20.times do |n|
-  Tag.create!(slug: Faker::Internet.slug,
-              label: Faker::Name.title,
-              description: Faker::Lorem.sentence(10))  
-end
-
-
-# Seed for tagging
-Medium.all.each do |medium|
-  medium.tag(Tag.offset(rand(Tag.count)).take)
-end
-
-
-# Seed for tickets
-Ticket.delete_all
-Medium.all.each_with_index do |medium, index|
-  user = User.first
-
-  case index % 3
-  when 0
-    medium.tickets.create!
-  when 1
-    medium.tickets.create!(user: user,
-                         checked_in: true,
-                         checked_in_at: 1.hours.ago)
-  when 2
-    medium.tickets.create!(user: user,
-                         checked_in: true,
-                         checked_in_at: 1.hours.ago,
-                         activated: true,
-                         activated_at: Time.zone.now)
-  end
-end
-
-
-# Seed for comments
-Comment.delete_all
-media = Medium.order(:created_at).take(6)
-users = User.all.take(10)
-users.each do |user|
-  media.each { |medium|
-    medium.comments.create!(body: Faker::Lorem.sentence(4),
-                            user: user)
+# Comments
+users = User.order(:created_at).take(6)
+50.times do |n|
+  content = FFaker::Lorem.sentence
+  count = (n >= Medium.count ? n % Medium.count : n) + 1
+  users.each { |user|
+    user.comments.create!(content: content, medium_id: Medium.find(count).id)
   }
 end
